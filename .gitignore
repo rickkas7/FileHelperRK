@@ -2,3 +2,4 @@
 *.bin
 .vscode
 automated-test/FileTest
+automated-test/test-output
