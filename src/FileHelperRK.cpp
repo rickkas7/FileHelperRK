@@ -76,7 +76,7 @@ int FileHelperRK::mkdirs(const char *path) {
 
         String partialPath = parsed.generatePathString(curPart);
         result = stat(partialPath.c_str(), &sb);
-        _fileHelperLog.trace("curPart=%d result=%d errno=%d partialPath=%s\n", curPart, result, errno, partialPath.c_str());
+        // _fileHelperLog.trace("curPart=%d result=%d errno=%d partialPath=%s", curPart, result, errno, partialPath.c_str());
         if (result == 0) {
             if ((sb.st_mode & S_IFDIR) == 0) {
                 // Not a directory

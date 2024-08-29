@@ -3,7 +3,7 @@
 all : FileTest
 	./FileTest
 
-FileTest : FileTest.cpp ../src/FileHelperRK.cpp ../src/FileHelperRK.h libwiringgcc
+FileTest : FileTest.cpp ../src/FileHelperRK.cpp ../src/FileHelperRK.h ../src/FileHelperRK_AutomatedTest.h libwiringgcc
 	gcc FileTest.cpp ../src/FileHelperRK.cpp UnitTestLib/libwiringgcc.a -std=c++17 -lc++ -IUnitTestLib -I../src -o FileTest -DUNITTEST
 
 check : FileTest.cpp  ../src/FileHelperRK.cpp ../src/FileHelperRK.h libwiringgcc
