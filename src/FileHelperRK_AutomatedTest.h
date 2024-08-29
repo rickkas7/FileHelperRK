@@ -139,6 +139,8 @@ void runTestDirs() {
 
     FileHelperRK::mkdirs(FileHelperRK::pathJoin(baseDir, "foo/a/c"));
 
+
+
     FileHelperRK::deleteRecursive(FileHelperRK::pathJoin(baseDir, "foo"));
 }
 
@@ -154,6 +156,15 @@ void runTestReadStoreString() {
         result = FileHelperRK::readString(pathTest1, s2);
         assert_int(SYSTEM_ERROR_NONE, result);
         assert_cstr(s1.c_str(), s2.c_str());
+
+        FileHelperRK::Usage usage;
+        result = usage.measure(pathTest1);
+        assert_int(SYSTEM_ERROR_NONE, result);
+        assert_int(1, usage.numFiles);
+        assert_int(0, usage.numDirectories);
+        assert_int(14, usage.fileBytes);
+        assert_int(2, usage.sectors);
+
     }
 
     // Make sure string truncates

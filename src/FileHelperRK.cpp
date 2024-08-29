@@ -77,7 +77,71 @@ String FileHelperRK::ParsedPath::generatePathString(int numParts) {
     return result;
 }
 
+int FileHelperRK::Usage::measure(const char *path, bool clearStats) {
+    int result = SYSTEM_ERROR_UNKNOWN;
+    
+    if (clearStats) {
+        clear();
+    }
 
+    struct stat sb;
+
+    result = stat(path, &sb);
+    if (result == -1) {
+        return errnoToSystemError();
+    }
+
+    if ((sb.st_mode & S_IFDIR) != 0) {
+        std::deque<String> toCheck;
+
+        // _fileHelperLog.trace("deleteRecursive path=%s", path);  
+
+        DIR *dirp = opendir(path);
+        if (dirp) {      
+            while(true) {
+                struct dirent *de = readdir(dirp);
+                if (!de) {
+                    break;
+                }
+                // _fileHelperLog.trace("Usage::measure de->d_name=%s", de->d_name);  
+
+                if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0) {
+                    continue;
+                }
+
+                toCheck.push_back(de->d_name);
+            }
+
+            closedir(dirp);        
+        }        
+        
+        while(!toCheck.empty()) {
+            result = measure(pathJoin(path, toCheck.front()), false);
+            if (result) {
+                return result;
+            }
+            toCheck.pop_front();
+        }
+        numDirectories++;
+        sectors++;
+    }
+    else {
+        fileBytes += sb.st_size;
+        sectors += ((sb.st_size + 511) / 512) + 1;
+        numFiles++;        
+    }
+
+    return result;
+}
+
+void FileHelperRK::Usage::clear() {
+    fileBytes = 0;
+    sectors = 0;
+    numFiles = 0;
+    numDirectories = 0;
+}
+
+        
 
 int FileHelperRK::mkdirs(const char *path) {
     int result = SYSTEM_ERROR_UNKNOWN;

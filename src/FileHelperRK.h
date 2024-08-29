@@ -11,6 +11,50 @@
  */
 class FileHelperRK {
 public:
+    class Usage {
+    public:
+        /**
+         * @brief Measure disk usage for a directory and its subdirectories and files
+         * 
+         * @param path c-string containing an absolute or relative Unix-style pathname (slash separated) to a file or directory
+         * @param clearStats Call clear() to reset stats
+         * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+         */
+        int measure(const char *path, bool clearStats = true);
+
+        /**
+         * @brief Clear the measurement stats
+         */
+        void clear();
+
+        /**
+         * @brief Number of bytes total for all files
+         * 
+         * This is a sum of the file sizes, not the usage on disk.
+         */
+        size_t fileBytes = 0;
+
+        /**
+         * @brief Number of sectors used
+         * 
+         * Each sector is 512 bytes. Each file takes one sector for metadata plus enough
+         * sectors to hold all of the data. Each directory takes one sector.
+         * 
+         * This is an approximate value and may vary from the actual usage.
+         */
+        size_t sectors = 0;
+
+        /**
+         * @brief Number of files
+         */
+        size_t numFiles = 0;
+
+        /**
+         * @brief Number of directories
+         */
+        size_t numDirectories = 0;
+    };
+
     /**
      * @brief Container for a parsed pathname (Unix-style, with slashes)
      */
