@@ -9,7 +9,7 @@ SerialLogHandler logHandler(LOG_LEVEL_TRACE);
 unsigned long lastRun = 0;
 
 void setup() {
-
+    baseDir = "/usr";
 }
 
 void loop() {

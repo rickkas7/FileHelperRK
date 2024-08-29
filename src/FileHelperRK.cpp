@@ -1,7 +1,10 @@
 #include "FileHelperRK.h"
 
+#include <dirent.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+
+#include <deque>
 
 const char *FileHelperRK::pathDelim = "/";
 
@@ -28,6 +31,21 @@ int FileHelperRK::ParsedPath::parse(const char *path) {
 
         part = strtok_r(nullptr, pathDelim, &save);
     }
+
+    if (!parts.empty()) {
+        String str = parts[parts.size() - 1];
+        
+        const char offset = str.lastIndexOf(".");
+        if (offset >= 0) {
+            fileBaseName = str.substring(0, offset);
+            fileExtension = str.substring(offset + 1);
+        }
+        else {
+            fileBaseName = str;
+        }
+    }
+
+
     return SYSTEM_ERROR_NONE; // 0
 }
 
@@ -35,6 +53,8 @@ void FileHelperRK::ParsedPath::clear() {
     parts.clear();
     startsWithSlash = false;
     endsWithSlash = false;
+    fileBaseName = "";
+    fileExtension = "";
 }
 
 String FileHelperRK::ParsedPath::generatePathString(int numParts) {
@@ -76,7 +96,9 @@ int FileHelperRK::mkdirs(const char *path) {
 
         String partialPath = parsed.generatePathString(curPart);
         result = stat(partialPath.c_str(), &sb);
-        // _fileHelperLog.trace("curPart=%d result=%d errno=%d partialPath=%s", curPart, result, errno, partialPath.c_str());
+
+        // _fileHelperLog.trace("mkdirs test curPart=%d result=%d errno=%d partialPath=%s", curPart, result, errno, partialPath.c_str());
+
         if (result == 0) {
             if ((sb.st_mode & S_IFDIR) == 0) {
                 // Not a directory
@@ -93,8 +115,10 @@ int FileHelperRK::mkdirs(const char *path) {
 
     for(curPart++; curPart <= numParts; curPart++){
         String partialPath = parsed.generatePathString(curPart);
-
         result = mkdir(partialPath.c_str(), 0777);
+
+        // _fileHelperLog.trace("mkdirs create curPart=%d result=%d errno=%d partialPath=%s", curPart, result, errno, partialPath.c_str());
+
         if (result) {
             return result;
         }
@@ -105,6 +129,71 @@ int FileHelperRK::mkdirs(const char *path) {
 
     return result;
 }
+
+int FileHelperRK::deleteRecursive(const char *path, bool contentsOfPathOnly) {
+    int result = SYSTEM_ERROR_UNKNOWN;
+
+    std::deque<String> filesToDelete;
+    std::deque<String> directoriesToDelete;
+
+    // _fileHelperLog.trace("deleteRecursive path=%s", path);  
+
+    DIR *dirp = opendir(path);
+    if (dirp) {      
+        while(true) {
+            struct dirent *de = readdir(dirp);
+            if (!de) {
+                break;
+            }
+            // _fileHelperLog.trace("deleteRecursive de->d_name=%s", de->d_name);  
+
+            if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0) {
+                continue;
+            }
+
+            if (de->d_type & DT_DIR) {
+                directoriesToDelete.push_back(de->d_name);
+            }
+            else 
+            if (de->d_type & DT_REG) {
+                filesToDelete.push_back(de->d_name);
+            }
+        }
+
+        closedir(dirp);        
+    }
+
+    while(!directoriesToDelete.empty()) {
+        String newPath = pathJoin(path, directoriesToDelete.front());
+        result = deleteRecursive(newPath, false);
+        if (result) {
+            _fileHelperLog.info("deleteRecursive inner failure fileName=%s result=%d", newPath.c_str(), result);
+        }
+        directoriesToDelete.pop_front();
+    }
+
+    while(!filesToDelete.empty()) {
+        String newPath = pathJoin(path, filesToDelete.front());
+        result = unlink(newPath);
+        if (result == -1) {
+            _fileHelperLog.info("deleteRecursive unlink failed fileName=%s errno=%d", newPath.c_str(), errno);
+            result = errnoToSystemError();
+            break;
+        }
+        filesToDelete.pop_front();
+    }
+
+    if (!contentsOfPathOnly) {
+        result = rmdir(path);
+        if (result == -1) {
+            _fileHelperLog.info("deleteRecursive unlink self failed fileName=%s errno=%d", path, errno);
+            result = errnoToSystemError();
+        }
+    }
+
+    return result;
+}
+
 
 int FileHelperRK::storeBytes(const char *fileName, const uint8_t *dataPtr, size_t dataLen)
 {
@@ -186,6 +275,11 @@ int FileHelperRK::readBytes(const char *fileName, uint8_t *&dataPtr, size_t &dat
             }
             else {
                 // Empty file, not an error                
+                if (nullTerminate) {
+                    dataPtr = new uint8_t[1];                    
+                    dataPtr[0] = 0;
+                }
+
                 result = SYSTEM_ERROR_NONE;
             }
 
@@ -269,4 +363,20 @@ int FileHelperRK::errnoToSystemError() {
     }
 
     return SYSTEM_ERROR_UNKNOWN;
+}
+
+String FileHelperRK::pathJoin(const char *a, const char *b) {
+    String result;
+
+    if (a && strlen(a)) {
+        result.concat(a);
+    }
+    if (b && strlen(b)) {
+        if (result.length() && result.charAt(result.length() - 1) != pathDelim[0]) {
+            result.concat(pathDelim);
+        }
+        result.concat(b);
+    }
+
+    return result;
 }

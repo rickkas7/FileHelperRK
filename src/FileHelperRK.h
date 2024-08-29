@@ -5,6 +5,10 @@
 
 #include <vector>
 
+/**
+ * @brief Class to perform common file operations
+ * 
+ */
 class FileHelperRK {
 public:
     /**
@@ -75,14 +79,46 @@ public:
          */
         String generatePathString(int numParts = -1);
 
+        /**
+         * @brief Get the filename of the last component of the path without an extension
+         * 
+         * @return String 
+         */
+        String getFileBaseName() const { return fileBaseName; };
+
+        /**
+         * @brief Get the filename extension of the last component of the path
+         * 
+         * @return String 
+         */
+        String getFileExtension() const { return fileExtension; };
 
     protected:
         bool startsWithSlash = false; //!< true if the parsed path began with a slash (absolute path)
         bool endsWithSlash = false; //!< true if the parsed path ended with a slash
+        String fileBaseName; //!< Filename (last part of path) without extension
+        String fileExtension; //!< Filename (last part of path) extension (does not contain dot)
         std::vector<String> parts; //!< parsed parts of the pathname. Does not contain empty parts.
     };
 
+    /**
+     * @brief Create all of the directories in path
+     * 
+     * @param path 
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     * 
+     * The standard mkdir() function only will create the last component of the path.
+     */
     static int mkdirs(const char *path);
+
+    /**
+     * @brief Delete a directory and all of the subdirectories and files
+     * 
+     * @param path The directory (or contents of the directory) to delete
+     * @param contentsOfPathOnly If true, only delete the contents of path, leaving the top directory.
+     * @return int 
+     */
+    static int deleteRecursive(const char *path, bool contentsOfPathOnly = false);
 
     /**
      * @brief Store bytes to a file
@@ -96,17 +132,63 @@ public:
      */
     static int storeBytes(const char *fileName, const uint8_t *dataPtr, size_t dataLen);
 
+    /**
+     * @brief Store a String object to a file
+     * 
+     * @param fileName Filename to write to. File will be created and truncated.
+     * @param data String object to write. It only needs to remain valid until this method returns.
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     */
     static int storeString(const char *fileName, const String &data);
 
+    /**
+     * @brief Store a c-string to a file
+     * 
+     * @param fileName Filename to write to. File will be created and truncated.
+     * @param str c-string to write. Can be an empty string or NULL to save an empty file.
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     */
     static int storeString(const char *fileName, const char *str);
 
+    /**
+     * @brief Read bytes from a file
+     * 
+     * @param fileName Filename to read from
+     * @param dataPtr Filled in with an allocated pointer containing the data
+     * @param dataLen On return, the length of the data in bytes
+     * @param nullTerminate Set to true to null-terminate the buffer. Default is false. If null terminated, the dataLen is the actual string length, not including the null terminator.
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     * 
+     * If the returned value in dataPtr is non-zero, you must delete it using delete[] dataPtr.
+     */
     static int readBytes(const char *fileName, uint8_t *&dataPtr, size_t &dataLen, bool nullTerminate = false);
 
+    /**
+     * @brief Read file contents to a String object
+     * 
+     * @param fileName Filename to read from
+     * @param result String object filled in with the data
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     */
     static int readString(const char *fileName, String &result);
 
+    /**
+     * @brief Internal function to convert the value of errno into a Particle system error code
+     * 
+     * @return int A system_error_t error code (0 = success, negative value on error)
+     */
     static int errnoToSystemError();
 
-    static const char *pathDelim;
+    /**
+     * @brief Join two pathnames or filenames, adding a / delimeter in between if necessary
+     * 
+     * @param a 
+     * @param b 
+     * @return String 
+     */
+    static String pathJoin(const char *a, const char *b);
+
+    static const char *pathDelim; //!< Path delimeter ("/")
 };
 
 
