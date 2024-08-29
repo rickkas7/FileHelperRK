@@ -1,10 +1,10 @@
 #include "FileHelperRK.h"
 
 #include <dirent.h>
-#include <fcntl.h>
 #include <sys/stat.h>
 
 #include <deque>
+
 
 const char *FileHelperRK::pathDelim = "/";
 
@@ -141,7 +141,60 @@ void FileHelperRK::Usage::clear() {
     numDirectories = 0;
 }
 
-        
+FileHelperRK::PrintToFile::PrintToFile() : fd(-1), closeFile(false) {
+}
+
+FileHelperRK::PrintToFile::PrintToFile(int fd) : fd(fd), closeFile(false) {
+
+}
+
+int FileHelperRK::PrintToFile::open(const char *path, int mode, int perm) {
+    int result = SYSTEM_ERROR_UNKNOWN;
+
+    fd = ::open(path, mode, perm);
+    if (fd != -1) {
+        closeFile = true;
+        result = SYSTEM_ERROR_NONE;
+    }
+    else {
+        _fileHelperLog.info("PrintToFile::open did not open fileName=%s errno=%d", path, errno);
+        result = errnoToSystemError();
+    }
+    return result;
+}
+
+FileHelperRK::PrintToFile::~PrintToFile() {
+    if (closeFile && fd != -1) {
+        ::close(fd);
+        fd = -1;
+    }
+}
+
+int FileHelperRK::PrintToFile::close() {
+    if (fd != -1) {
+        ::close(fd);
+        fd = -1;
+    }
+    return SYSTEM_ERROR_NONE;
+}
+
+size_t FileHelperRK::PrintToFile::write(uint8_t c) {
+    size_t countResult = 0;
+    if (fd != -1) {
+        countResult = ::write(fd, &c, 1);
+    }
+    return countResult;
+}
+
+size_t FileHelperRK::PrintToFile::write(const uint8_t *buffer, size_t size) {
+    size_t countResult = 0;
+    if (fd != -1) {
+        countResult = ::write(fd, buffer, size);
+    }
+
+    return countResult;
+}
+    
 
 int FileHelperRK::mkdirs(const char *path) {
     int result = SYSTEM_ERROR_UNKNOWN;
@@ -304,6 +357,22 @@ int FileHelperRK::storeString(const char *fileName, const char *str)
         return storeBytes(fileName, nullptr, 0);
     }
 }
+
+int FileHelperRK::storeVariant(const char *fileName, const particle::Variant &variant) {
+    int result = SYSTEM_ERROR_UNKNOWN;
+
+    FileHelperRK::PrintToFile pf;
+
+    result = pf.open(fileName);
+    if (result != SYSTEM_ERROR_NONE) {
+        return result;
+    }
+    result = particle::encodeToCBOR(variant, pf);
+
+    pf.close();
+    return result;
+}
+
 
 int FileHelperRK::readBytes(const char *fileName, uint8_t *&dataPtr, size_t &dataLen, bool nullTerminate)
 {

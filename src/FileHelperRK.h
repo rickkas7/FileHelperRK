@@ -3,6 +3,7 @@
 
 #include "Particle.h"
 
+#include <fcntl.h>
 #include <vector>
 
 /**
@@ -145,6 +146,24 @@ public:
         std::vector<String> parts; //!< parsed parts of the pathname. Does not contain empty parts.
     };
 
+    class PrintToFile : public Print {
+    public:
+        PrintToFile();
+        PrintToFile(int fd);
+
+        virtual ~PrintToFile();
+
+        int open(const char *path, int mode = O_RDWR | O_CREAT | O_TRUNC, int perm = 0666);
+        int close();
+
+        virtual size_t write(uint8_t);
+        virtual size_t write(const uint8_t *buffer, size_t size);
+
+    protected:
+        int fd = -1;
+        bool closeFile = false;
+    };
+
     /**
      * @brief Create all of the directories in path
      * 
@@ -193,6 +212,8 @@ public:
      * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
      */
     static int storeString(const char *fileName, const char *str);
+
+    static int storeVariant(const char *fileName, const particle::Variant &variant);
 
     /**
      * @brief Read bytes from a file

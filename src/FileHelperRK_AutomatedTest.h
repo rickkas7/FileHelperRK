@@ -216,10 +216,23 @@ void runTestReadStoreString() {
 
 }
 
+void runTestVariant() {
+    String pathTest2 = FileHelperRK::pathJoin(baseDir, "test2");
+    int result;
+
+    {
+        particle::Variant v1("this is a test");
+
+        FileHelperRK::storeVariant(pathTest2, v1);        
+    }
+}
+
+
 void runTest() {
     runTestParsePath();
     runTestDirs();
     runTestReadStoreString();
+    runTestVariant();
 
     Log.info("runTest completed!");
 }
