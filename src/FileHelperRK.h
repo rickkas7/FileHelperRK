@@ -10,6 +10,8 @@
 /**
  * @brief Class to perform common file operations
  * 
+ * License: MIT (can use in free or commercial open or closed source products)
+ * Repository: https://github.com/rickkas7/FileHelperRK
  */
 class FileHelperRK {
 public:

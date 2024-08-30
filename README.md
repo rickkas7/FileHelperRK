@@ -14,9 +14,13 @@ This library contains a number of utility functions for working with the Particl
 - Parse a pathname
 - Join pathname components
 
+There is full [browseable API documentation](https://rickkas7.github.io/FileHelperRK/class_file_helper_r_k.html) available
+online and in the docs directory of this repository.
 
 
-
+License: MIT (can use in free or commercial open or closed source products)
+Github Repository: https://github.com/rickkas7/FileHelperRK
+ 
 ## Version history
 
 ### 0.0.1 (2024-08-30)
