@@ -1,0 +1,204 @@
+\doxysection{File\+Helper\+RK\+::Parsed\+Path Class Reference}
+\hypertarget{class_file_helper_r_k_1_1_parsed_path}{}\label{class_file_helper_r_k_1_1_parsed_path}\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+
+
+Container for a parsed pathname (Unix-\/style, with slashes)  
+
+
+
+
+{\ttfamily \#include $<$File\+Helper\+RK.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}} (const char \texorpdfstring{$\ast$}{*}path)
+\begin{DoxyCompactList}\small\item\em Parse a pathname (Unix-\/style, with slashes) \end{DoxyCompactList}\item 
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_ae7617ddba10f042b4e7f5af2dc145770}\label{class_file_helper_r_k_1_1_parsed_path_ae7617ddba10f042b4e7f5af2dc145770} 
+void {\bfseries clear} ()
+\begin{DoxyCompactList}\small\item\em Clear the parsed data in this object. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{get\+Starts\+With\+Slash}} () const
+\begin{DoxyCompactList}\small\item\em Returns true if path starts with a slash (is absolute) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{get\+Ends\+With\+Slash}} () const
+\begin{DoxyCompactList}\small\item\em Returns true if the path ends with a slash. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{get\+Num\+Parts}} () const
+\begin{DoxyCompactList}\small\item\em Get the number of path parts. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_af831e7eb66dc6cdb6a8e1fad697b8b31}{get\+Part}} (size\+\_\+t index) const
+\begin{DoxyCompactList}\small\item\em Get a pathname part from its index. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d5a1dde0ee0bfa5dfa8279b4ce89928}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t index) const
+\begin{DoxyCompactList}\small\item\em Get a pathname part from its index. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generate\+Path\+String}} (int num\+Parts=-\/1)
+\begin{DoxyCompactList}\small\item\em Generate a new pathname string. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7f1527bca149f34ef4bdd0dc06cf7458}{get\+File\+Base\+Name}} () const
+\begin{DoxyCompactList}\small\item\em Get the filename of the last component of the path without an extension. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a8f3244ffcc5c67886768fc11826c01bd}{get\+File\+Extension}} () const
+\begin{DoxyCompactList}\small\item\em Get the filename extension of the last component of the path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_abdcc66e8c77e1fdba2729febc1ab7f28}\label{class_file_helper_r_k_1_1_parsed_path_abdcc66e8c77e1fdba2729febc1ab7f28} 
+bool {\bfseries starts\+With\+Slash} = false
+\begin{DoxyCompactList}\small\item\em true if the parsed path began with a slash (absolute path) \end{DoxyCompactList}\item 
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_ab3a2c38800b9670a89060572e598769f}\label{class_file_helper_r_k_1_1_parsed_path_ab3a2c38800b9670a89060572e598769f} 
+bool {\bfseries ends\+With\+Slash} = false
+\begin{DoxyCompactList}\small\item\em true if the parsed path ended with a slash \end{DoxyCompactList}\item 
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_ae1f1eb33dda94409aba33a2e7c1203c3}\label{class_file_helper_r_k_1_1_parsed_path_ae1f1eb33dda94409aba33a2e7c1203c3} 
+String {\bfseries file\+Base\+Name}
+\begin{DoxyCompactList}\small\item\em Filename (last part of path) without extension. \end{DoxyCompactList}\item 
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_aa5b02d1317b97cc871ec03b306a1de90}\label{class_file_helper_r_k_1_1_parsed_path_aa5b02d1317b97cc871ec03b306a1de90} 
+String {\bfseries file\+Extension}
+\begin{DoxyCompactList}\small\item\em Filename (last part of path) extension (does not contain dot) \end{DoxyCompactList}\item 
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_aff0c9ee3b0d1db7f1bbe3676b9703f08}\label{class_file_helper_r_k_1_1_parsed_path_aff0c9ee3b0d1db7f1bbe3676b9703f08} 
+std\+::vector$<$ String $>$ {\bfseries parts}
+\begin{DoxyCompactList}\small\item\em parsed parts of the pathname. Does not contain empty parts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Container for a parsed pathname (Unix-\/style, with slashes) 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}\label{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf} 
+\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}!generatePathString@{generatePathString}}
+\index{generatePathString@{generatePathString}!FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+\doxysubsubsection{\texorpdfstring{generatePathString()}{generatePathString()}}
+{\footnotesize\ttfamily String File\+Helper\+RK\+::\+Parsed\+Path\+::generate\+Path\+String (\begin{DoxyParamCaption}\item[{int}]{num\+Parts = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+
+Generate a new pathname string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+Parts} & -\/1 to include the whole string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}\label{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195} 
+\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}!getEndsWithSlash@{getEndsWithSlash}}
+\index{getEndsWithSlash@{getEndsWithSlash}!FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+\doxysubsubsection{\texorpdfstring{getEndsWithSlash()}{getEndsWithSlash()}}
+{\footnotesize\ttfamily bool File\+Helper\+RK\+::\+Parsed\+Path\+::get\+Ends\+With\+Slash (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns true if the path ends with a slash. 
+
+\begin{DoxyReturn}{Returns}
+true Path ends with a slash
+\end{DoxyReturn}
+Normally a path ending with a slash signifies a directory, but this function does not validate that this is true on the file system. It merely tests the input string. \Hypertarget{class_file_helper_r_k_1_1_parsed_path_a7f1527bca149f34ef4bdd0dc06cf7458}\label{class_file_helper_r_k_1_1_parsed_path_a7f1527bca149f34ef4bdd0dc06cf7458} 
+\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}!getFileBaseName@{getFileBaseName}}
+\index{getFileBaseName@{getFileBaseName}!FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+\doxysubsubsection{\texorpdfstring{getFileBaseName()}{getFileBaseName()}}
+{\footnotesize\ttfamily String File\+Helper\+RK\+::\+Parsed\+Path\+::get\+File\+Base\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the filename of the last component of the path without an extension. 
+
+\begin{DoxyReturn}{Returns}
+String 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_a8f3244ffcc5c67886768fc11826c01bd}\label{class_file_helper_r_k_1_1_parsed_path_a8f3244ffcc5c67886768fc11826c01bd} 
+\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}!getFileExtension@{getFileExtension}}
+\index{getFileExtension@{getFileExtension}!FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+\doxysubsubsection{\texorpdfstring{getFileExtension()}{getFileExtension()}}
+{\footnotesize\ttfamily String File\+Helper\+RK\+::\+Parsed\+Path\+::get\+File\+Extension (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the filename extension of the last component of the path. 
+
+\begin{DoxyReturn}{Returns}
+String 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}\label{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391} 
+\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}!getNumParts@{getNumParts}}
+\index{getNumParts@{getNumParts}!FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+\doxysubsubsection{\texorpdfstring{getNumParts()}{getNumParts()}}
+{\footnotesize\ttfamily int File\+Helper\+RK\+::\+Parsed\+Path\+::get\+Num\+Parts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the number of path parts. 
+
+\begin{DoxyReturn}{Returns}
+int (0 = empty path, 1 = one part) 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_af831e7eb66dc6cdb6a8e1fad697b8b31}\label{class_file_helper_r_k_1_1_parsed_path_af831e7eb66dc6cdb6a8e1fad697b8b31} 
+\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}!getPart@{getPart}}
+\index{getPart@{getPart}!FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+\doxysubsubsection{\texorpdfstring{getPart()}{getPart()}}
+{\footnotesize\ttfamily String File\+Helper\+RK\+::\+Parsed\+Path\+::get\+Part (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get a pathname part from its index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & 0-\/based index to retrieve, must be 0 \texorpdfstring{$<$}{<}= index \texorpdfstring{$<$}{<} \doxylink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{get\+Num\+Parts()} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String Copy of the pathname part 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}\label{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055} 
+\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}!getStartsWithSlash@{getStartsWithSlash}}
+\index{getStartsWithSlash@{getStartsWithSlash}!FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+\doxysubsubsection{\texorpdfstring{getStartsWithSlash()}{getStartsWithSlash()}}
+{\footnotesize\ttfamily bool File\+Helper\+RK\+::\+Parsed\+Path\+::get\+Starts\+With\+Slash (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns true if path starts with a slash (is absolute) 
+
+\begin{DoxyReturn}{Returns}
+true Absolute path 
+
+false Relative path 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_a2d5a1dde0ee0bfa5dfa8279b4ce89928}\label{class_file_helper_r_k_1_1_parsed_path_a2d5a1dde0ee0bfa5dfa8279b4ce89928} 
+\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily String File\+Helper\+RK\+::\+Parsed\+Path\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get a pathname part from its index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & 0-\/based index to retrieve, must be 0 \texorpdfstring{$<$}{<}= index \texorpdfstring{$<$}{<} \doxylink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{get\+Num\+Parts()} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String Copy of the pathname part 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}\label{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f} 
+\index{FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}!parse@{parse}}
+\index{parse@{parse}!FileHelperRK::ParsedPath@{FileHelperRK::ParsedPath}}
+\doxysubsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily int File\+Helper\+RK\+::\+Parsed\+Path\+::parse (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path }\end{DoxyParamCaption})}
+
+
+
+Parse a pathname (Unix-\/style, with slashes) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & c-\/string containing an absolute or relative Unix-\/style pathname (slash separated) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int SYSTEM\+\_\+\+ERROR\+\_\+\+NONE (0) on success or a system error code (non-\/zero) 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/File\+Helper\+RK.\+h\item 
+src/File\+Helper\+RK.\+cpp\end{DoxyCompactItemize}

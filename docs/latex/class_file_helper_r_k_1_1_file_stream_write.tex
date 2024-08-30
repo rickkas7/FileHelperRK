@@ -1,0 +1,117 @@
+\doxysection{File\+Helper\+RK\+::File\+Stream\+Write Class Reference}
+\hypertarget{class_file_helper_r_k_1_1_file_stream_write}{}\label{class_file_helper_r_k_1_1_file_stream_write}\index{FileHelperRK::FileStreamWrite@{FileHelperRK::FileStreamWrite}}
+
+
+Class for writing to a file as a Print.  
+
+
+
+
+{\ttfamily \#include $<$File\+Helper\+RK.\+h$>$}
+
+Inheritance diagram for File\+Helper\+RK\+::File\+Stream\+Write\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_file_helper_r_k_1_1_file_stream_write}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_write_af7529b9b061bf550aeef0e3673719371}{open}} (const char \texorpdfstring{$\ast$}{*}path)
+\begin{DoxyCompactList}\small\item\em Open a file for writing. Opens as O\+\_\+\+RDWR \texorpdfstring{$\vert$}{|} O\+\_\+\+CREAT \texorpdfstring{$\vert$}{|} O\+\_\+\+TRUNC. \end{DoxyCompactList}\item 
+virtual size\+\_\+t \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_write_ace89b8632b33b1adfb90845be23f64e6}{write}} (uint8\+\_\+t c)
+\begin{DoxyCompactList}\small\item\em Writes a character to the file Override for Print pure virtual function. \end{DoxyCompactList}\item 
+virtual size\+\_\+t \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_write_afd9027d725b44e1ccf5f38095210971d}{write}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Writes multiple bytes to the file Override for Print pure virtual function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base}{File\+Helper\+RK\+::\+File\+Stream\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries File\+Stream\+Base} ()
+\begin{DoxyCompactList}\small\item\em Construct object; you will typically do this and then call open\+For\+Reading or open\+For\+Writing. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_a6fff913c58d0f7dbaa83e16d70d13adc}{File\+Stream\+Base}} (int \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_acbddbb8a036f0c3ade4484038ef1057c}{fd}})
+\begin{DoxyCompactList}\small\item\em Construct object from an existing file descriptor from \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()} \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_a27b1882238b0f011b6c1bf8267cf7f51}{\texorpdfstring{$\sim$}{\string~}\+File\+Stream\+Base}} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open}} (const char \texorpdfstring{$\ast$}{*}path, int mode, int perm=0666)
+\begin{DoxyCompactList}\small\item\em Open a file. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_a5e8634543ef6e72266e7af4a3dfa1ca3}{close}} ()
+\begin{DoxyCompactList}\small\item\em Close the underling file if it was opened using \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base}{File\+Helper\+RK\+::\+File\+Stream\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries fd} = -\/1
+\begin{DoxyCompactList}\small\item\em File descriptor from \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()} \end{DoxyCompactList}\item 
+bool {\bfseries close\+File} = false
+\begin{DoxyCompactList}\small\item\em Close file on destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for writing to a file as a Print. 
+
+Used for writing a Variant to a file as CBOR. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_file_helper_r_k_1_1_file_stream_write_af7529b9b061bf550aeef0e3673719371}\label{class_file_helper_r_k_1_1_file_stream_write_af7529b9b061bf550aeef0e3673719371} 
+\index{FileHelperRK::FileStreamWrite@{FileHelperRK::FileStreamWrite}!open@{open}}
+\index{open@{open}!FileHelperRK::FileStreamWrite@{FileHelperRK::FileStreamWrite}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily int File\+Helper\+RK\+::\+File\+Stream\+Write\+::open (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path }\end{DoxyParamCaption})}
+
+
+
+Open a file for writing. Opens as O\+\_\+\+RDWR \texorpdfstring{$\vert$}{|} O\+\_\+\+CREAT \texorpdfstring{$\vert$}{|} O\+\_\+\+TRUNC. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & Filename to write to. File will be created and truncated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int SYSTEM\+\_\+\+ERROR\+\_\+\+NONE (0) on success or a system error code (non-\/zero)
+\end{DoxyReturn}
+If you want to use a different mode, call the \doxylink{class_file_helper_r_k_1_1_file_stream_write_af7529b9b061bf550aeef0e3673719371}{open()} method in the base class. \Hypertarget{class_file_helper_r_k_1_1_file_stream_write_afd9027d725b44e1ccf5f38095210971d}\label{class_file_helper_r_k_1_1_file_stream_write_afd9027d725b44e1ccf5f38095210971d} 
+\index{FileHelperRK::FileStreamWrite@{FileHelperRK::FileStreamWrite}!write@{write}}
+\index{write@{write}!FileHelperRK::FileStreamWrite@{FileHelperRK::FileStreamWrite}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily size\+\_\+t File\+Helper\+RK\+::\+File\+Stream\+Write\+::write (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Writes multiple bytes to the file Override for Print pure virtual function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Pointer to a buffer of bytes to write \\
+\hline
+{\em size} & Number of bytes to write. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+size\+\_\+t Number of bytes written (normally size). 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_1_1_file_stream_write_ace89b8632b33b1adfb90845be23f64e6}\label{class_file_helper_r_k_1_1_file_stream_write_ace89b8632b33b1adfb90845be23f64e6} 
+\index{FileHelperRK::FileStreamWrite@{FileHelperRK::FileStreamWrite}!write@{write}}
+\index{write@{write}!FileHelperRK::FileStreamWrite@{FileHelperRK::FileStreamWrite}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily size\+\_\+t File\+Helper\+RK\+::\+File\+Stream\+Write\+::write (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Writes a character to the file Override for Print pure virtual function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & Byte to write. Can be binary data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+size\+\_\+t Number of bytes written (normally 1). 0 on error. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/File\+Helper\+RK.\+h\item 
+src/File\+Helper\+RK.\+cpp\end{DoxyCompactItemize}
