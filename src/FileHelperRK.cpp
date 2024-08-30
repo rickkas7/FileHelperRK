@@ -105,30 +105,19 @@ void FileHelperRK::Usage::clear() {
     numDirectories = 0;
 }
 
-FileHelperRK::FileStream::FileStream() : fd(-1), closeFile(false) {
+FileHelperRK::FileStreamBase::FileStreamBase() : fd(-1), closeFile(false) {
 }
 
-FileHelperRK::FileStream::FileStream(int fd) : fd(fd), closeFile(false) {
+FileHelperRK::FileStreamBase::FileStreamBase(int fd) : fd(fd), closeFile(false) {
 
 }
 
-int FileHelperRK::FileStream::openForReading(const char *path) {
-    return open(path, O_RDONLY, 0666);
-}
-int FileHelperRK::FileStream::openForWriting(const char *path) {
-    return open(path, O_RDWR | O_CREAT | O_TRUNC, 0666);
-}
-
-int FileHelperRK::FileStream::open(const char *path, int mode, int perm) {
+int FileHelperRK::FileStreamBase::open(const char *path, int mode, int perm) {
     int result = SYSTEM_ERROR_UNKNOWN;
 
     fd = ::open(path, mode, perm);
     if (fd != -1) {
         closeFile = true;
-
-        struct stat sb;
-        fstat(fd, &sb);
-        fileSize = sb.st_size;
 
         result = SYSTEM_ERROR_NONE;
     }
@@ -139,14 +128,14 @@ int FileHelperRK::FileStream::open(const char *path, int mode, int perm) {
     return result;
 }
 
-FileHelperRK::FileStream::~FileStream() {
+FileHelperRK::FileStreamBase::~FileStreamBase() {
     if (closeFile && fd != -1) {
         ::close(fd);
         fd = -1;
     }
 }
 
-int FileHelperRK::FileStream::close() {
+int FileHelperRK::FileStreamBase::close() {
     if (fd != -1) {
         ::close(fd);
         fd = -1;
@@ -154,11 +143,26 @@ int FileHelperRK::FileStream::close() {
     return SYSTEM_ERROR_NONE;
 }
 
-int FileHelperRK::FileStream::available() {
+int FileHelperRK::FileStreamRead::open(const char *path) {
+    int result = FileStreamBase::open(path, O_RDONLY, 0666);
+    if (result == SYSTEM_ERROR_NONE) {
+        struct stat sb;
+        fstat(fd, &sb);
+        fileSize = sb.st_size;
+        fileOffset = 0;
+    }
+    else {
+        fileSize = fileOffset = 0;
+    }
+
+    return result;
+}
+
+int FileHelperRK::FileStreamRead::available() {
     return fileSize - fileOffset;
 }
 
-int FileHelperRK::FileStream::read() {
+int FileHelperRK::FileStreamRead::read() {
     int result = -1;
     uint8_t c;
 
@@ -173,7 +177,7 @@ int FileHelperRK::FileStream::read() {
     return result;
 }
 
-int FileHelperRK::FileStream::peek() {
+int FileHelperRK::FileStreamRead::peek() {
     int result = read();
     if (result >= 0) {
         fileOffset--;
@@ -182,16 +186,25 @@ int FileHelperRK::FileStream::peek() {
     return result;
 }
 
-void FileHelperRK::FileStream::flush() {
+void FileHelperRK::FileStreamRead::flush() {
 }
 
-int FileHelperRK::FileStream::rewind() {
+int FileHelperRK::FileStreamRead::rewind() {
     lseek(fd, 0, SEEK_SET);
+    fileOffset = 0;
     return SYSTEM_ERROR_NONE;
 }
 
+size_t FileHelperRK::FileStreamRead::write(uint8_t) {
+    return 0;
+}
 
-size_t FileHelperRK::FileStream::write(uint8_t c) {
+
+int FileHelperRK::FileStreamWrite::open(const char *path) {
+    return FileStreamBase::open(path, O_RDWR | O_CREAT | O_TRUNC, 0666);
+}
+
+size_t FileHelperRK::FileStreamWrite::write(uint8_t c) {
     size_t countResult = 0;
     if (fd != -1) {
         countResult = ::write(fd, &c, 1);
@@ -199,8 +212,9 @@ size_t FileHelperRK::FileStream::write(uint8_t c) {
     return countResult;
 }
 
-size_t FileHelperRK::FileStream::write(const uint8_t *buffer, size_t size) {
+size_t FileHelperRK::FileStreamWrite::write(const uint8_t *buffer, size_t size) {
     size_t countResult = 0;
+
     if (fd != -1) {
         countResult = ::write(fd, buffer, size);
     }
@@ -451,9 +465,9 @@ int FileHelperRK::storeString(const char *fileName, const char *str)
 int FileHelperRK::storeVariant(const char *fileName, const particle::Variant &variant) {
     int result = SYSTEM_ERROR_UNKNOWN;
 
-    FileHelperRK::FileStream stream;
+    FileHelperRK::FileStreamWrite stream;
 
-    result = stream.openForWriting(fileName);
+    result = stream.open(fileName);
     if (result != SYSTEM_ERROR_NONE) {
         return result;
     }
@@ -544,6 +558,23 @@ int FileHelperRK::readString(const char *fileName, String &resultStr)
     return result;
 }
 
+
+int FileHelperRK::readVariant(const char *fileName, particle::Variant &variant) {
+    int result = SYSTEM_ERROR_UNKNOWN;
+
+    FileHelperRK::FileStreamRead stream;
+
+    result = stream.open(fileName);
+    if (result != SYSTEM_ERROR_NONE) {
+        return result;
+    }
+
+    result = particle::decodeFromCBOR(variant, stream);
+
+    stream.close();
+    return result;
+}
+
 int FileHelperRK::errnoToSystemError() {
     switch(errno) {
         case EIO:
@@ -586,21 +617,6 @@ int FileHelperRK::errnoToSystemError() {
     }
 
     return SYSTEM_ERROR_UNKNOWN;
-}
-
-int FileHelperRK::readVariant(const char *fileName, particle::Variant &variant) {
-    int result = SYSTEM_ERROR_UNKNOWN;
-
-    FileHelperRK::FileStream stream;
-
-    result = stream.openForReading(fileName);
-    if (result != SYSTEM_ERROR_NONE) {
-        return result;
-    }
-    result = particle::decodeFromCBOR(variant, stream);
-
-    stream.close();
-    return result;
 }
 
 

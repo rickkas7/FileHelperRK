@@ -11,6 +11,9 @@
  */
 class FileHelperRK {
 public:
+    /**
+     * @brief Measure file system usage
+     */
     class Usage {
     public:
         /**
@@ -145,17 +148,47 @@ public:
         std::vector<String> parts; //!< parsed parts of the pathname. Does not contain empty parts.
     };
 
-    class FileStream : public Stream, public Print {
+    /**
+     * @brief Class for providing Stream and Print object for reading or writing a file
+     * 
+     * Important limitations:
+     * - This class is only for reading or writing, not both at the same time
+     * - When reading from a stream, the underling file is not expected to change; it cannot be used for live tail for example
+     */
+    class FileStreamBase {
     public:
-        FileStream();
-        FileStream(int fd);
+        /**
+         * @brief Construct object; you will typically do this and then call openForReading or openForWriting
+         */
+        FileStreamBase();
 
-        virtual ~FileStream();
+        /**
+         * @brief Construct object from an existing file descriptor from open()
+         * 
+         * @param fd File descriptor from open(). Will not be closed on destruction.
+         */
+        FileStreamBase(int fd);
 
-        int openForReading(const char *path);
-        int openForWriting(const char *path);
+        /**
+         * @brief Destructor. 
+         * 
+         * If file was opened using openForReading(), openForWriting(), or open() and close()
+         * has not been called, the file will be closed when the object is deleted. 
+         */
+        virtual ~FileStreamBase();
+
         int open(const char *path, int mode, int perm = 0666);
         int close();
+
+    protected:
+        int fd = -1;
+        bool closeFile = false;
+    };
+
+    class FileStreamRead : public Stream, public FileStreamBase {
+    public:
+        int open(const char *path);
+        int rewind();
 
         // Overrides for stream
         virtual int available();
@@ -163,19 +196,24 @@ public:
         virtual int peek();
         virtual void flush();
 
+        // Implementation from Stream Print
+        virtual size_t write(uint8_t);
+
+    protected:
+        size_t fileSize = 0;
+        size_t fileOffset = 0;
+
+    };
+
+    class FileStreamWrite : public Print, public FileStreamBase {
+    public:
+        int open(const char *path);
+
         // Implementation from Print
         virtual size_t write(uint8_t);
         virtual size_t write(const uint8_t *buffer, size_t size);
-
-
-        int rewind();
-
-    protected:
-        int fd = -1;
-        bool closeFile = false;
-        size_t fileSize = 0;
-        size_t fileOffset = 0;
     };
+
 
     /**
      * @brief Create all of the directories in path
