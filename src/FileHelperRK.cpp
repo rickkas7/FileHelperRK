@@ -196,6 +196,86 @@ size_t FileHelperRK::PrintToFile::write(const uint8_t *buffer, size_t size) {
 }
     
 
+FileHelperRK::StreamFromFile::StreamFromFile() : fd(-1), closeFile(false) {
+}
+
+FileHelperRK::StreamFromFile::StreamFromFile(int fd) : fd(fd), closeFile(false) {
+
+}
+
+int FileHelperRK::StreamFromFile::open(const char *path, int mode, int perm) {
+    int result = SYSTEM_ERROR_UNKNOWN;
+
+    fd = ::open(path, mode, perm);
+    if (fd != -1) {
+        closeFile = true;
+
+        struct stat sb;
+        fstat(fd, &sb);
+        fileSize = sb.st_size;
+
+        result = SYSTEM_ERROR_NONE;
+    }
+    else {
+        _fileHelperLog.info("StreamFromFile::open did not open fileName=%s errno=%d", path, errno);
+        result = errnoToSystemError();
+    }
+    return result;
+}
+
+FileHelperRK::StreamFromFile::~StreamFromFile() {
+    if (closeFile && fd != -1) {
+        ::close(fd);
+        fd = -1;
+    }
+}
+
+int FileHelperRK::StreamFromFile::close() {
+    if (fd != -1) {
+        ::close(fd);
+        fd = -1;
+    }
+    return SYSTEM_ERROR_NONE;
+}
+
+int FileHelperRK::StreamFromFile::available() {
+    return fileSize - fileOffset;
+}
+
+int FileHelperRK::StreamFromFile::read() {
+    int result = -1;
+    uint8_t c;
+
+    if (fd != -1) {
+        if (fileOffset < fileSize) {
+            if (::read(fd, &c, 1) == 1) {
+                fileOffset++;
+                result = (int)c;
+            }
+        }
+    }
+    return result;
+}
+
+int FileHelperRK::StreamFromFile::peek() {
+    int result = read();
+    if (result >= 0) {
+        fileOffset--;
+        lseek(fd, fileOffset, SEEK_SET);
+    }
+    return result;
+}
+
+int FileHelperRK::StreamFromFile::flush() {
+    return SYSTEM_ERROR_NONE;
+}
+
+int FileHelperRK::StreamFromFile::rewind() {
+    lseek(fd, 0, SEEK_SET);
+    return SYSTEM_ERROR_NONE;
+}
+
+
 int FileHelperRK::mkdirs(const char *path) {
     int result = SYSTEM_ERROR_UNKNOWN;
 
@@ -497,6 +577,22 @@ int FileHelperRK::errnoToSystemError() {
 
     return SYSTEM_ERROR_UNKNOWN;
 }
+
+int FileHelperRK::readVariant(const char *fileName, particle::Variant &variant) {
+    int result = SYSTEM_ERROR_UNKNOWN;
+
+    FileHelperRK::StreamFromFile sf;
+
+    result = sf.open(fileName);
+    if (result != SYSTEM_ERROR_NONE) {
+        return result;
+    }
+    result = particle::decodeFromCBOR(variant, sf);
+
+    sf.close();
+    return result;
+}
+
 
 String FileHelperRK::pathJoin(const char *a, const char *b) {
     String result;

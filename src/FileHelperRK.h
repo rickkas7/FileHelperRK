@@ -164,6 +164,30 @@ public:
         bool closeFile = false;
     };
 
+    class StreamFromFile : public Stream {
+    public:
+        StreamFromFile();
+        StreamFromFile(int fd);
+
+        virtual ~StreamFromFile();
+
+        int open(const char *path, int mode = O_RDONLY, int perm = 0666);
+        int close();
+
+        virtual int available();
+        virtual int read();
+        virtual int peek();
+        virtual int flush();
+
+        int rewind();
+
+    protected:
+        int fd = -1;
+        bool closeFile = false;
+        size_t fileSize = 0;
+        size_t fileOffset = 0;
+    };
+
     /**
      * @brief Create all of the directories in path
      * 
@@ -236,6 +260,8 @@ public:
      * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
      */
     static int readString(const char *fileName, String &result);
+
+    static int readVariant(const char *fileName, particle::Variant &variant);
 
     /**
      * @brief Internal function to convert the value of errno into a Particle system error code

@@ -223,7 +223,16 @@ void runTestVariant() {
     {
         particle::Variant v1("this is a test");
 
-        FileHelperRK::storeVariant(pathTest2, v1);        
+        result = FileHelperRK::storeVariant(pathTest2, v1);       
+        assert_int(SYSTEM_ERROR_NONE, result);
+
+        particle::Variant v2;
+
+        result =  FileHelperRK::readVariant(pathTest2, v2);
+        assert_int(SYSTEM_ERROR_NONE, result);
+
+        assert_cstr(v1.toString().c_str(), v2.toString().c_str());
+
     }
 }
 
