@@ -10,7 +10,7 @@ This library contains a number of utility functions for working with the Particl
 - Create a directory and parent directories (mkdirs)
 - Delete a directory recursively (deleteRecursive)
 - Measure disk usage of a directory
-- Walk the directory tree and call a callback or labmda for each file or directory
+- Walk the directory tree and call a callback or lambda for each file or directory
 - Parse a pathname
 - Join pathname components
 
