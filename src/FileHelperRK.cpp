@@ -146,10 +146,8 @@ int FileHelperRK::FileStreamBase::close() {
 int FileHelperRK::FileStreamRead::open(const char *path) {
     int result = FileStreamBase::open(path, O_RDONLY, 0666);
     if (result == SYSTEM_ERROR_NONE) {
-        struct stat sb;
-        fstat(fd, &sb);
-        fileSize = sb.st_size;
         fileOffset = 0;
+        updateFileSize();
     }
     else {
         fileSize = fileOffset = 0;
@@ -157,6 +155,18 @@ int FileHelperRK::FileStreamRead::open(const char *path) {
 
     return result;
 }
+
+void FileHelperRK::FileStreamRead::updateFileSize() {
+    if (fd != -1) {
+        struct stat sb;
+        fstat(fd, &sb);
+        fileSize = sb.st_size;
+    }
+    else {
+        fileSize = 0;
+    }
+}
+
 
 int FileHelperRK::FileStreamRead::available() {
     return fileSize - fileOffset;
@@ -353,16 +363,15 @@ int FileHelperRK::walk(const char *path, std::function<void(const WalkParameters
     WalkParameters walkParameters;
     walkParameters.path = path;
 
-    std::deque<String> filesToCheck;
-    std::deque<String> directoriesToCheck;
-
 
     if ((sb.st_mode & S_IFDIR) != 0) {
         walkParameters.isDirectory = true;
         walkParameters.size = 0;
         cb(walkParameters);
 
-        // _fileHelperLog.trace("deleteRecursive path=%s", path);  
+        // _fileHelperLog.trace("walk path=%s", path);  
+        std::deque<String> filesToCheck;
+        std::deque<String> directoriesToCheck;
 
         DIR *dirp = opendir(path);
         if (dirp) {      
@@ -371,7 +380,7 @@ int FileHelperRK::walk(const char *path, std::function<void(const WalkParameters
                 if (!de) {
                     break;
                 }
-                // _fileHelperLog.trace("Usage::measure de->d_name=%s", de->d_name);  
+                // _fileHelperLog.trace("walk de->d_name=%s", de->d_name);  
 
                 if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0) {
                     continue;

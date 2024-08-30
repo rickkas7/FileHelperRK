@@ -176,8 +176,25 @@ public:
          * has not been called, the file will be closed when the object is deleted. 
          */
         virtual ~FileStreamBase();
-
+        
+        /**
+         * @brief Open a file
+         * 
+         * @param path Filename to open.
+         * @param mode Mode such as O_RDONLY, or O_RDWR | O_CREAT | O_TRUNC.
+         * @param perm Permissions, defaults to 0666 (read and write for everyone).
+         * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+         */
         int open(const char *path, int mode, int perm = 0666);
+
+        /**
+         * @brief Close the underling file if it was opened using open()
+         * 
+         * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+         * 
+         * If you don't call close(), the file will be closed on object destruction if
+         * it was opened.
+         */
         int close();
 
     protected:
@@ -185,32 +202,105 @@ public:
         bool closeFile = false;
     };
 
+    /**
+     * @brief Class for reading from a file as a Stream
+     * 
+     * Used for reading a Variant from a file as CBOR.
+     */
     class FileStreamRead : public Stream, public FileStreamBase {
     public:
+        /**
+         * @brief Open a file for reading. Opens as O_RDONLY.
+         * 
+         * @param path Filename to read from.
+         * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+         */
         int open(const char *path);
+
+        /**
+         * @brief Start reading from the beginning of the file again.
+         * 
+         * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+         */
         int rewind();
 
         // Overrides for stream
+
+        /**
+         * @brief Returns number of bytes available to read. Override for Stream pure virtual function.
+         * 
+         * @return int Number of bytes to read or 0 at end of file
+         */
         virtual int available();
+
+        /**
+         * @brief Read a byte from the file.  Override for Stream pure virtual function.
+         * 
+         * @return int A value from 0 - 255 inclusive or -1 on error.
+         */
         virtual int read();
+
+        /**
+         * @brief Read a byte from the file without consuming it.  Override for Stream pure virtual function.
+         * 
+         * @return int A value from 0 - 255 inclusive or -1 on error.
+         */
         virtual int peek();
+
+        /**
+         * @brief Doesn't do anything. Override for Stream pure virtual function.
+         */
         virtual void flush();
 
-        // Implementation from Stream Print
+        /**
+         * @brief Doesn't do anything. Override for Stream::Print pure virtual function.
+         */
         virtual size_t write(uint8_t);
 
+        /**
+         * @brief Updates the fileSize parameter. Called from open().
+         */
+        void updateFileSize();
+
     protected:
-        size_t fileSize = 0;
-        size_t fileOffset = 0;
+        size_t fileSize = 0;  //!< File size in bytes, set in open() and updateFileSize().
+        size_t fileOffset = 0; //!< File position, set in open() and rewind(), updated on read()
 
     };
 
+    /**
+     * @brief Class for writing to a file as a Print
+     * 
+     * Used for writing a Variant to a file as CBOR.
+     */
     class FileStreamWrite : public Print, public FileStreamBase {
     public:
+        /**
+         * @brief Open a file for writing. Opens as O_RDWR | O_CREAT | O_TRUNC.
+         * 
+         * @param path Filename to write to. File will be created and truncated.
+         * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+         * 
+         * If you want to use a different mode, call the open() method in the base class.
+         */
         int open(const char *path);
 
-        // Implementation from Print
-        virtual size_t write(uint8_t);
+        // Overrides for Print
+        /**
+         * @brief Writes a character to the file Override for Print pure virtual function.
+         * 
+         * @param c Byte to write. Can be binary data.
+         * @return size_t Number of bytes written (normally 1). 0 on error.
+         */
+        virtual size_t write(uint8_t c);
+
+        /**
+         * @brief Writes multiple bytes to the file Override for Print pure virtual function.
+         * 
+         * @param buffer Pointer to a buffer of bytes to write
+         * @param size Number of bytes to write.
+         * @return size_t Number of bytes written (normally size).
+         */
         virtual size_t write(const uint8_t *buffer, size_t size);
     };
 

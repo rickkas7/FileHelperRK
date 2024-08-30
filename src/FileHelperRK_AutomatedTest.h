@@ -139,13 +139,10 @@ void runTestDirs() {
 
     FileHelperRK::mkdirs(FileHelperRK::pathJoin(baseDir, "foo/a/c"));
 
-
-
-    FileHelperRK::deleteRecursive(FileHelperRK::pathJoin(baseDir, "foo"));
 }
 
 void runTestReadStoreString() {
-    String pathTest1 = FileHelperRK::pathJoin(baseDir, "test1");
+    String pathTest1 = FileHelperRK::pathJoin(baseDir, "foo/test1");
 
     {
         String s1 = "this is a test";
@@ -217,7 +214,7 @@ void runTestReadStoreString() {
 }
 
 void runTestVariant() {
-    String pathTest2 = FileHelperRK::pathJoin(baseDir, "test2");
+    String pathTest2 = FileHelperRK::pathJoin(baseDir, "foo/test2");
     int result;
 
     {
@@ -234,6 +231,34 @@ void runTestVariant() {
         assert_cstr(v1.toString().c_str(), v2.toString().c_str());
 
     }
+
+    {
+        const char *jsonStr = "{\"a\":123,\"b\":\"test\",\"c\":true,\"d\":[1,2,3]}";
+
+        JSONValue jsonValue = JSONValue::parseCopy(jsonStr);
+
+        /*
+        JSONObjectIterator iter(jsonValue);
+        while(iter.next()) {
+            Log.info("key=%s value=%s", 
+            (const char *) iter.name(), 
+            (const char *) iter.value().toString());
+        }
+        */
+
+        particle::Variant v1 = particle::Variant::fromJSON(jsonValue);;
+
+        result = FileHelperRK::storeVariant(pathTest2, v1);       
+        assert_int(SYSTEM_ERROR_NONE, result);
+
+        particle::Variant v2;
+
+        result =  FileHelperRK::readVariant(pathTest2, v2);
+        assert_int(SYSTEM_ERROR_NONE, result);
+
+        String s = v2.toJSON();
+        assert_cstr(jsonStr, s.c_str());
+    }
 }
 
 
@@ -242,6 +267,8 @@ void runTest() {
     runTestDirs();
     runTestReadStoreString();
     runTestVariant();
+
+    FileHelperRK::deleteRecursive(FileHelperRK::pathJoin(baseDir, "foo"));
 
     Log.info("runTest completed!");
 }
