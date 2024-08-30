@@ -214,6 +214,7 @@ void runTestReadStoreString() {
 }
 
 void runTestVariant() {
+#if defined(SYSTEM_VERSION_560) || defined(UNITTEST)
     String pathTest2 = FileHelperRK::pathJoin(baseDir, "foo/test2");
     int result;
 
@@ -259,6 +260,9 @@ void runTestVariant() {
         String s = v2.toJSON();
         assert_cstr(jsonStr, s.c_str());
     }
+#else  
+    Log.info("Variant tests skipped");
+#endif // defined(SYSTEM_VERSION_560) || defined(UNITTEST)
 }
 
 

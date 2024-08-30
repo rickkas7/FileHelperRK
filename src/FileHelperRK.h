@@ -5,6 +5,8 @@
 
 #include <vector>
 
+
+
 /**
  * @brief Class to perform common file operations
  * 
@@ -29,6 +31,13 @@ public:
          * @brief Clear the measurement stats
          */
         void clear();
+
+        /**
+         * @brief Return a readable representation of this class
+         * 
+         * @return String 
+         */
+        String toString() const;
 
         /**
          * @brief Number of bytes total for all files
@@ -354,6 +363,7 @@ public:
      */
     static int storeString(const char *fileName, const char *str);
 
+#if defined(SYSTEM_VERSION_560) || defined(UNITTEST)
     /**
      * @brief Store a Variant to a file
      * 
@@ -362,6 +372,7 @@ public:
      * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
      */
     static int storeVariant(const char *fileName, const particle::Variant &variant);
+#endif // SYSTEM_VERSION_560
 
     /**
      * @brief Read bytes from a file
@@ -385,6 +396,7 @@ public:
      */
     static int readString(const char *fileName, String &result);
 
+#if defined(SYSTEM_VERSION_560) || defined(UNITTEST)
     /**
      * @brief Read file contents to a Variant object
      * 
@@ -393,6 +405,7 @@ public:
      * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
      */
     static int readVariant(const char *fileName, particle::Variant &variant);
+#endif // SYSTEM_VERSION_560
 
     /**
      * @brief Internal function to convert the value of errno into a Particle system error code
@@ -418,6 +431,13 @@ public:
         const char *path;   //!< Pathname
         bool isDirectory;   //!< true if a directory, false if a file
         size_t size;        //!< size of file if file (0 for directories)
+
+        /**
+         * @brief Return a readable representation of this class
+         * 
+         * @return String 
+         */
+        String toString() const;
     };
 
     /**

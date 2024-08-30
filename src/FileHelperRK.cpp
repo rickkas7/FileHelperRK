@@ -105,6 +105,12 @@ void FileHelperRK::Usage::clear() {
     numDirectories = 0;
 }
 
+String FileHelperRK::Usage::toString() const {
+    return String::format("fileBytes=%d, sectors=%d, numFiles=%d, numDirectories=%d",
+        (int)fileBytes, (int)sectors, (int)numFiles, (int)numDirectories);
+}
+
+
 FileHelperRK::FileStreamBase::FileStreamBase() : fd(-1), closeFile(false) {
 }
 
@@ -256,7 +262,11 @@ int FileHelperRK::mkdirs(const char *path) {
         if (result == 0) {
             if ((sb.st_mode & S_IFDIR) == 0) {
                 // Not a directory
+#if defined(SYSTEM_VERSION_550) || defined(UNITTEST)
                 return SYSTEM_ERROR_FILESYSTEM_NOTDIR;
+#else
+                return -1;
+#endif
             }
             break;
         }
@@ -348,6 +358,15 @@ int FileHelperRK::deleteRecursive(const char *path, bool contentsOfPathOnly) {
     return result;
 }
 
+String FileHelperRK::WalkParameters::toString() const {
+    if (isDirectory) {
+        return String::format("%s (directory)", path);
+    }
+    else {
+        return String::format("%s (%d bytes)", path, size);
+    }
+}
+
 
 int FileHelperRK::walk(const char *path, std::function<void(const WalkParameters &pParam)> cb) {
     int result = SYSTEM_ERROR_UNKNOWN;
@@ -433,7 +452,7 @@ int FileHelperRK::storeBytes(const char *fileName, const uint8_t *dataPtr, size_
     if (fd != -1) {
         if (dataPtr && dataLen > 0) {
             int resultLen = write(fd, dataPtr, dataLen);
-            if (resultLen == dataLen) {
+            if (resultLen == (int) dataLen) {
                 result = SYSTEM_ERROR_NONE;
             }
             else {
@@ -471,6 +490,7 @@ int FileHelperRK::storeString(const char *fileName, const char *str)
     }
 }
 
+#if defined(SYSTEM_VERSION_560) || defined(UNITTEST)
 int FileHelperRK::storeVariant(const char *fileName, const particle::Variant &variant) {
     int result = SYSTEM_ERROR_UNKNOWN;
 
@@ -485,7 +505,7 @@ int FileHelperRK::storeVariant(const char *fileName, const particle::Variant &va
     stream.close();
     return result;
 }
-
+#endif // SYSTEM_VERSION_560
 
 int FileHelperRK::readBytes(const char *fileName, uint8_t *&dataPtr, size_t &dataLen, bool nullTerminate)
 {
@@ -567,7 +587,7 @@ int FileHelperRK::readString(const char *fileName, String &resultStr)
     return result;
 }
 
-
+#if defined(SYSTEM_VERSION_560) || defined(UNITTEST)
 int FileHelperRK::readVariant(const char *fileName, particle::Variant &variant) {
     int result = SYSTEM_ERROR_UNKNOWN;
 
@@ -583,8 +603,12 @@ int FileHelperRK::readVariant(const char *fileName, particle::Variant &variant) 
     stream.close();
     return result;
 }
+#endif // SYSTEM_VERSION_560
 
 int FileHelperRK::errnoToSystemError() {
+
+    // Earlier versions of Device OS don't define these constants, so just always return unknown
+#if defined(SYSTEM_VERSION_550) || defined(UNITTEST)
     switch(errno) {
         case EIO:
             return SYSTEM_ERROR_FILESYSTEM_IO;
@@ -624,6 +648,7 @@ int FileHelperRK::errnoToSystemError() {
         default:
             return SYSTEM_ERROR_UNKNOWN;
     }
+#endif // defined(SYSTEM_VERSION_550) || defined(UNITTEST)
 
     return SYSTEM_ERROR_UNKNOWN;
 }
