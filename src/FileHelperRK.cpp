@@ -80,57 +80,20 @@ String FileHelperRK::ParsedPath::generatePathString(int numParts) {
 
 int FileHelperRK::Usage::measure(const char *path, bool clearStats) {
     int result = SYSTEM_ERROR_UNKNOWN;
-    
-    if (clearStats) {
-        clear();
-    }
 
-    struct stat sb;
+    clear();
 
-    result = stat(path, &sb);
-    if (result == -1) {
-        return errnoToSystemError();
-    }
-
-    if ((sb.st_mode & S_IFDIR) != 0) {
-        std::deque<String> toCheck;
-
-        // _fileHelperLog.trace("deleteRecursive path=%s", path);  
-
-        DIR *dirp = opendir(path);
-        if (dirp) {      
-            while(true) {
-                struct dirent *de = readdir(dirp);
-                if (!de) {
-                    break;
-                }
-                // _fileHelperLog.trace("Usage::measure de->d_name=%s", de->d_name);  
-
-                if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0) {
-                    continue;
-                }
-
-                toCheck.push_back(de->d_name);
-            }
-
-            closedir(dirp);        
-        }        
-        
-        while(!toCheck.empty()) {
-            result = measure(pathJoin(path, toCheck.front()), false);
-            if (result) {
-                return result;
-            }
-            toCheck.pop_front();
+    result = walk(path, [this](const WalkParameters &walkParameters) {
+        if (walkParameters.isDirectory) {
+            numDirectories++;
+            sectors++;
         }
-        numDirectories++;
-        sectors++;
-    }
-    else {
-        fileBytes += sb.st_size;
-        sectors += ((sb.st_size + 511) / 512) + 1;
-        numFiles++;        
-    }
+        else {
+            fileBytes += walkParameters.size;
+            sectors += ((walkParameters.size + 511) / 512) + 1;
+            numFiles++;        
+        }
+    });
 
     return result;
 }
@@ -357,6 +320,83 @@ int FileHelperRK::deleteRecursive(const char *path, bool contentsOfPathOnly) {
             result = errnoToSystemError();
         }
     }
+
+    return result;
+}
+
+
+int FileHelperRK::walk(const char *path, std::function<void(const WalkParameters &pParam)> cb) {
+    int result = SYSTEM_ERROR_UNKNOWN;
+    
+
+    struct stat sb;
+
+    result = stat(path, &sb);
+    if (result == -1) {
+        return errnoToSystemError();
+    }
+
+    WalkParameters walkParameters;
+    walkParameters.path = path;
+
+    std::deque<String> filesToCheck;
+    std::deque<String> directoriesToCheck;
+
+
+    if ((sb.st_mode & S_IFDIR) != 0) {
+        walkParameters.isDirectory = true;
+        walkParameters.size = 0;
+        cb(walkParameters);
+
+        // _fileHelperLog.trace("deleteRecursive path=%s", path);  
+
+        DIR *dirp = opendir(path);
+        if (dirp) {      
+            while(true) {
+                struct dirent *de = readdir(dirp);
+                if (!de) {
+                    break;
+                }
+                // _fileHelperLog.trace("Usage::measure de->d_name=%s", de->d_name);  
+
+                if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0) {
+                    continue;
+                }
+
+                if (de->d_type & DT_DIR) {
+                    directoriesToCheck.push_back(de->d_name);
+                }
+                else 
+                if (de->d_type & DT_REG) {
+                    filesToCheck.push_back(de->d_name);
+                }
+            }
+
+            closedir(dirp);        
+        }        
+
+        while(!directoriesToCheck.empty()) {
+            result = walk(pathJoin(path, directoriesToCheck.front()), cb);
+            if (result) {
+                return result;
+            }
+            directoriesToCheck.pop_front();
+        }
+        while(!filesToCheck.empty()) {
+            result = walk(pathJoin(path, filesToCheck.front()), cb);
+            if (result) {
+                return result;
+            }
+            filesToCheck.pop_front();
+        }
+    }
+    else {
+        walkParameters.isDirectory = false;
+        walkParameters.size = sb.st_size;
+        cb(walkParameters);
+    }
+
+
 
     return result;
 }

@@ -226,6 +226,13 @@ public:
      */
     static int storeString(const char *fileName, const char *str);
 
+    /**
+     * @brief Store a Variant to a file
+     * 
+     * @param fileName Filename to write to. File will be created and truncated.
+     * @param variant Variant to write.
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     */
     static int storeVariant(const char *fileName, const particle::Variant &variant);
 
     /**
@@ -250,6 +257,13 @@ public:
      */
     static int readString(const char *fileName, String &result);
 
+    /**
+     * @brief Read file contents to a Variant object
+     * 
+     * @param fileName Filename to read from
+     * @param variant Variant object filled in with the data
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     */
     static int readVariant(const char *fileName, particle::Variant &variant);
 
     /**
@@ -267,6 +281,28 @@ public:
      * @return String 
      */
     static String pathJoin(const char *a, const char *b);
+
+    /**
+     * @brief Structure to hold the parameters to the walk method
+     * 
+     */
+    struct WalkParameters {
+        const char *path;   //!< Pathname
+        bool isDirectory;   //!< true if a directory, false if a file
+        size_t size;        //!< size of file if file (0 for directories)
+    };
+
+    /**
+     * @brief Walk the file system calling the callback function or lambda
+     * 
+     * @param path Path to start checking (can be file or directory)
+     * @param cb Callback function or lambda to call
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     * 
+     */
+    static int walk(const char *path, std::function<void(const WalkParameters &walkParameters)> cb);
+
+
 
     static const char *pathDelim; //!< Path delimeter ("/")
 };
