@@ -1,0 +1,104 @@
+\doxysection{File\+Helper\+RK\+::Usage Class Reference}
+\hypertarget{class_file_helper_r_k_1_1_usage}{}\label{class_file_helper_r_k_1_1_usage}\index{FileHelperRK::Usage@{FileHelperRK::Usage}}
+
+
+Measure file system usage.  
+
+
+
+
+{\ttfamily \#include $<$File\+Helper\+RK.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_file_helper_r_k_1_1_usage_a64fc4863885a9fefae8b3b2105230e1c}{measure}} (const char \texorpdfstring{$\ast$}{*}path, bool clear\+Stats=true)
+\begin{DoxyCompactList}\small\item\em Measure disk usage for a directory and its subdirectories and files. \end{DoxyCompactList}\item 
+\Hypertarget{class_file_helper_r_k_1_1_usage_a37e8528bd1fb3fb365fb6feeb16ae7c7}\label{class_file_helper_r_k_1_1_usage_a37e8528bd1fb3fb365fb6feeb16ae7c7} 
+void {\bfseries clear} ()
+\begin{DoxyCompactList}\small\item\em Clear the measurement stats. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{class_file_helper_r_k_1_1_usage_a18ecc8feefd9cae2d43d63afc8204839}{to\+String}} () const
+\begin{DoxyCompactList}\small\item\em Return a readable representation of this class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{class_file_helper_r_k_1_1_usage_ace0866281e6b00f9b9f6be87958d63cf}{file\+Bytes}} = 0
+\begin{DoxyCompactList}\small\item\em Number of bytes total for all files. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_file_helper_r_k_1_1_usage_a994ac628c39268f4f55d0df885694043}{sectors}} = 0
+\begin{DoxyCompactList}\small\item\em Number of sectors used. \end{DoxyCompactList}\item 
+\Hypertarget{class_file_helper_r_k_1_1_usage_abc379c382a4b1f62fa6f494f052bfefb}\label{class_file_helper_r_k_1_1_usage_abc379c382a4b1f62fa6f494f052bfefb} 
+size\+\_\+t {\bfseries num\+Files} = 0
+\begin{DoxyCompactList}\small\item\em Number of files. \end{DoxyCompactList}\item 
+\Hypertarget{class_file_helper_r_k_1_1_usage_a4ecdecfdf92fc126ec71bb7062253a50}\label{class_file_helper_r_k_1_1_usage_a4ecdecfdf92fc126ec71bb7062253a50} 
+size\+\_\+t {\bfseries num\+Directories} = 0
+\begin{DoxyCompactList}\small\item\em Number of directories. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Measure file system usage. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_file_helper_r_k_1_1_usage_a64fc4863885a9fefae8b3b2105230e1c}\label{class_file_helper_r_k_1_1_usage_a64fc4863885a9fefae8b3b2105230e1c} 
+\index{FileHelperRK::Usage@{FileHelperRK::Usage}!measure@{measure}}
+\index{measure@{measure}!FileHelperRK::Usage@{FileHelperRK::Usage}}
+\doxysubsubsection{\texorpdfstring{measure()}{measure()}}
+{\footnotesize\ttfamily int File\+Helper\+RK\+::\+Usage\+::measure (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path,  }\item[{bool}]{clear\+Stats = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Measure disk usage for a directory and its subdirectories and files. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & c-\/string containing an absolute or relative Unix-\/style pathname (slash separated) to a file or directory \\
+\hline
+{\em clear\+Stats} & Call \doxylink{class_file_helper_r_k_1_1_usage_a37e8528bd1fb3fb365fb6feeb16ae7c7}{clear()} to reset stats \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int SYSTEM\+\_\+\+ERROR\+\_\+\+NONE (0) on success or a system error code (non-\/zero) 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_1_1_usage_a18ecc8feefd9cae2d43d63afc8204839}\label{class_file_helper_r_k_1_1_usage_a18ecc8feefd9cae2d43d63afc8204839} 
+\index{FileHelperRK::Usage@{FileHelperRK::Usage}!toString@{toString}}
+\index{toString@{toString}!FileHelperRK::Usage@{FileHelperRK::Usage}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily String File\+Helper\+RK\+::\+Usage\+::to\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return a readable representation of this class. 
+
+\begin{DoxyReturn}{Returns}
+String 
+\end{DoxyReturn}
+
+
+\doxysubsection{Field Documentation}
+\Hypertarget{class_file_helper_r_k_1_1_usage_ace0866281e6b00f9b9f6be87958d63cf}\label{class_file_helper_r_k_1_1_usage_ace0866281e6b00f9b9f6be87958d63cf} 
+\index{FileHelperRK::Usage@{FileHelperRK::Usage}!fileBytes@{fileBytes}}
+\index{fileBytes@{fileBytes}!FileHelperRK::Usage@{FileHelperRK::Usage}}
+\doxysubsubsection{\texorpdfstring{fileBytes}{fileBytes}}
+{\footnotesize\ttfamily size\+\_\+t File\+Helper\+RK\+::\+Usage\+::file\+Bytes = 0}
+
+
+
+Number of bytes total for all files. 
+
+This is a sum of the file sizes, not the usage on disk. \Hypertarget{class_file_helper_r_k_1_1_usage_a994ac628c39268f4f55d0df885694043}\label{class_file_helper_r_k_1_1_usage_a994ac628c39268f4f55d0df885694043} 
+\index{FileHelperRK::Usage@{FileHelperRK::Usage}!sectors@{sectors}}
+\index{sectors@{sectors}!FileHelperRK::Usage@{FileHelperRK::Usage}}
+\doxysubsubsection{\texorpdfstring{sectors}{sectors}}
+{\footnotesize\ttfamily size\+\_\+t File\+Helper\+RK\+::\+Usage\+::sectors = 0}
+
+
+
+Number of sectors used. 
+
+Each sector is 512 bytes. Each file takes one sector for metadata plus enough sectors to hold all of the data. Each directory takes one sector.
+
+This is an approximate value and may vary from the actual usage. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/File\+Helper\+RK.\+h\item 
+src/File\+Helper\+RK.\+cpp\end{DoxyCompactItemize}

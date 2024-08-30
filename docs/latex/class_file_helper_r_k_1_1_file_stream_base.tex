@@ -1,0 +1,121 @@
+\doxysection{File\+Helper\+RK\+::File\+Stream\+Base Class Reference}
+\hypertarget{class_file_helper_r_k_1_1_file_stream_base}{}\label{class_file_helper_r_k_1_1_file_stream_base}\index{FileHelperRK::FileStreamBase@{FileHelperRK::FileStreamBase}}
+
+
+Class for providing Stream and Print object for reading or writing a file.  
+
+
+
+
+{\ttfamily \#include $<$File\+Helper\+RK.\+h$>$}
+
+Inheritance diagram for File\+Helper\+RK\+::File\+Stream\+Base\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_file_helper_r_k_1_1_file_stream_base}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_file_helper_r_k_1_1_file_stream_base_acd9b5c8a1f6a9c1c07048d6c83dd2c73}\label{class_file_helper_r_k_1_1_file_stream_base_acd9b5c8a1f6a9c1c07048d6c83dd2c73} 
+{\bfseries File\+Stream\+Base} ()
+\begin{DoxyCompactList}\small\item\em Construct object; you will typically do this and then call open\+For\+Reading or open\+For\+Writing. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_a6fff913c58d0f7dbaa83e16d70d13adc}{File\+Stream\+Base}} (int \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_acbddbb8a036f0c3ade4484038ef1057c}{fd}})
+\begin{DoxyCompactList}\small\item\em Construct object from an existing file descriptor from \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()} \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_a27b1882238b0f011b6c1bf8267cf7f51}{\texorpdfstring{$\sim$}{\string~}\+File\+Stream\+Base}} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open}} (const char \texorpdfstring{$\ast$}{*}path, int mode, int perm=0666)
+\begin{DoxyCompactList}\small\item\em Open a file. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_file_helper_r_k_1_1_file_stream_base_a5e8634543ef6e72266e7af4a3dfa1ca3}{close}} ()
+\begin{DoxyCompactList}\small\item\em Close the underling file if it was opened using \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_file_helper_r_k_1_1_file_stream_base_acbddbb8a036f0c3ade4484038ef1057c}\label{class_file_helper_r_k_1_1_file_stream_base_acbddbb8a036f0c3ade4484038ef1057c} 
+int {\bfseries fd} = -\/1
+\begin{DoxyCompactList}\small\item\em File descriptor from \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()} \end{DoxyCompactList}\item 
+\Hypertarget{class_file_helper_r_k_1_1_file_stream_base_ae2872a73de323e5a1f21a748ce7e0632}\label{class_file_helper_r_k_1_1_file_stream_base_ae2872a73de323e5a1f21a748ce7e0632} 
+bool {\bfseries close\+File} = false
+\begin{DoxyCompactList}\small\item\em Close file on destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for providing Stream and Print object for reading or writing a file. 
+
+Important limitations\+:
+\begin{DoxyItemize}
+\item This class is only for reading or writing, not both at the same time
+\item When reading from a stream, the underling file is not expected to change; it cannot be used for live tail for example 
+\end{DoxyItemize}
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_file_helper_r_k_1_1_file_stream_base_a6fff913c58d0f7dbaa83e16d70d13adc}\label{class_file_helper_r_k_1_1_file_stream_base_a6fff913c58d0f7dbaa83e16d70d13adc} 
+\index{FileHelperRK::FileStreamBase@{FileHelperRK::FileStreamBase}!FileStreamBase@{FileStreamBase}}
+\index{FileStreamBase@{FileStreamBase}!FileHelperRK::FileStreamBase@{FileHelperRK::FileStreamBase}}
+\doxysubsubsection{\texorpdfstring{FileStreamBase()}{FileStreamBase()}}
+{\footnotesize\ttfamily File\+Helper\+RK\+::\+File\+Stream\+Base\+::\+File\+Stream\+Base (\begin{DoxyParamCaption}\item[{int}]{fd }\end{DoxyParamCaption})}
+
+
+
+Construct object from an existing file descriptor from \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fd} & File descriptor from \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()}. Will not be closed on destruction. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_file_helper_r_k_1_1_file_stream_base_a27b1882238b0f011b6c1bf8267cf7f51}\label{class_file_helper_r_k_1_1_file_stream_base_a27b1882238b0f011b6c1bf8267cf7f51} 
+\index{FileHelperRK::FileStreamBase@{FileHelperRK::FileStreamBase}!````~FileStreamBase@{\texorpdfstring{$\sim$}{\string~}FileStreamBase}}
+\index{````~FileStreamBase@{\texorpdfstring{$\sim$}{\string~}FileStreamBase}!FileHelperRK::FileStreamBase@{FileHelperRK::FileStreamBase}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}FileStreamBase()}{\string~FileStreamBase()}}
+{\footnotesize\ttfamily File\+Helper\+RK\+::\+File\+Stream\+Base\+::\texorpdfstring{$\sim$}{\string~}\+File\+Stream\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Destructor. 
+
+If file was opened using open\+For\+Reading(), open\+For\+Writing(), or \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()} and \doxylink{class_file_helper_r_k_1_1_file_stream_base_a5e8634543ef6e72266e7af4a3dfa1ca3}{close()} has not been called, the file will be closed when the object is deleted. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_file_helper_r_k_1_1_file_stream_base_a5e8634543ef6e72266e7af4a3dfa1ca3}\label{class_file_helper_r_k_1_1_file_stream_base_a5e8634543ef6e72266e7af4a3dfa1ca3} 
+\index{FileHelperRK::FileStreamBase@{FileHelperRK::FileStreamBase}!close@{close}}
+\index{close@{close}!FileHelperRK::FileStreamBase@{FileHelperRK::FileStreamBase}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily int File\+Helper\+RK\+::\+File\+Stream\+Base\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Close the underling file if it was opened using \doxylink{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}{open()} 
+
+\begin{DoxyReturn}{Returns}
+int SYSTEM\+\_\+\+ERROR\+\_\+\+NONE (0) on success or a system error code (non-\/zero)
+\end{DoxyReturn}
+If you don\textquotesingle{}t call \doxylink{class_file_helper_r_k_1_1_file_stream_base_a5e8634543ef6e72266e7af4a3dfa1ca3}{close()}, the file will be closed on object destruction if it was opened. \Hypertarget{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f}\label{class_file_helper_r_k_1_1_file_stream_base_a2cb1f6e76d9ddef604da05428dacfe5f} 
+\index{FileHelperRK::FileStreamBase@{FileHelperRK::FileStreamBase}!open@{open}}
+\index{open@{open}!FileHelperRK::FileStreamBase@{FileHelperRK::FileStreamBase}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily int File\+Helper\+RK\+::\+File\+Stream\+Base\+::open (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path,  }\item[{int}]{mode,  }\item[{int}]{perm = {\ttfamily 0666} }\end{DoxyParamCaption})}
+
+
+
+Open a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & Filename to open. \\
+\hline
+{\em mode} & Mode such as O\+\_\+\+RDONLY, or O\+\_\+\+RDWR \texorpdfstring{$\vert$}{|} O\+\_\+\+CREAT \texorpdfstring{$\vert$}{|} O\+\_\+\+TRUNC. \\
+\hline
+{\em perm} & Permissions, defaults to 0666 (read and write for everyone). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int SYSTEM\+\_\+\+ERROR\+\_\+\+NONE (0) on success or a system error code (non-\/zero) 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/File\+Helper\+RK.\+h\item 
+src/File\+Helper\+RK.\+cpp\end{DoxyCompactItemize}

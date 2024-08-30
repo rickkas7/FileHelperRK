@@ -207,8 +207,8 @@ public:
         int close();
 
     protected:
-        int fd = -1;
-        bool closeFile = false;
+        int fd = -1; //!< File descriptor from open()
+        bool closeFile = false; //!< Close file on destructor
     };
 
     /**
@@ -329,7 +329,7 @@ public:
      * 
      * @param path The directory (or contents of the directory) to delete
      * @param contentsOfPathOnly If true, only delete the contents of path, leaving the top directory.
-     * @return int 
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
      */
     static int deleteRecursive(const char *path, bool contentsOfPathOnly = false);
 
@@ -370,6 +370,14 @@ public:
      * @param fileName Filename to write to. File will be created and truncated.
      * @param variant Variant to write.
      * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     * 
+     * Variant is used for storing any structured data including primitive types (int, boolean, string)
+     * as well as maps and arrays. It's also directly translatable to JSON.
+     * 
+     * Internally, when stored to a file, the data is saved as CBOR (not JSON).
+     * 
+     * Variant is only defined in Device OS 5.6.0 and later. This method is npt
+     * available on earlier versions of Device OS.
      */
     static int storeVariant(const char *fileName, const particle::Variant &variant);
 #endif // SYSTEM_VERSION_560
@@ -403,6 +411,14 @@ public:
      * @param fileName Filename to read from
      * @param variant Variant object filled in with the data
      * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     * 
+     * Variant is used for storing any structured data including primitive types (int, boolean, string)
+     * as well as maps and arrays. It's also directly translatable to JSON.
+     * 
+     * Internally, when stored to a file, the data is saved as CBOR (not JSON).
+     * 
+     * Variant is only defined in Device OS 5.6.0 and later. This method is npt
+     * available on earlier versions of Device OS.
      */
     static int readVariant(const char *fileName, particle::Variant &variant);
 #endif // SYSTEM_VERSION_560
@@ -411,21 +427,23 @@ public:
      * @brief Internal function to convert the value of errno into a Particle system error code
      * 
      * @return int A system_error_t error code (0 = success, negative value on error)
+     * 
+     * File system errors are only defined in Device OS 5.5.0 and later. If targeting an
+     * earlier version of Device OS, returns SYSTEM_ERROR_UNKNOWN.
      */
     static int errnoToSystemError();
 
     /**
      * @brief Join two pathnames or filenames, adding a / delimeter in between if necessary
      * 
-     * @param a 
-     * @param b 
-     * @return String 
+     * @param a Path component(s). Can be slash separated parts, a filename, an empty string, or NULL.
+     * @param b Path component(s). Can be slash separated parts, a filename, an empty string, or NULL.
+     * @return String The combined pathname
      */
     static String pathJoin(const char *a, const char *b);
 
     /**
      * @brief Structure to hold the parameters to the walk method
-     * 
      */
     struct WalkParameters {
         const char *path;   //!< Pathname

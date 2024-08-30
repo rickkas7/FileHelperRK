@@ -17,3 +17,9 @@ This library contains a number of utility functions for working with the Particl
 
 
 
+## Version history
+
+### 0.0.1 (2024-08-30)
+
+- Initial version
+
