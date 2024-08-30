@@ -6,6 +6,7 @@ This library contains a number of utility functions for working with the Particl
 
 - Store or read a string in a file
 - Store or read an array of bytes in a file
+- Store or read a struct in a file
 - Store or read a Variant in a file. This can be used for structured data, including JSON (Device OS 5.6.0 and later).
 - Create a directory and parent directories (mkdirs)
 - Delete a directory recursively (deleteRecursive)
@@ -22,6 +23,10 @@ License: MIT (can use in free or commercial open or closed source products)
 Github Repository: https://github.com/rickkas7/FileHelperRK
  
 ## Version history
+
+### 0.0.2 (2024-08-30)
+
+- Added storeStruct and readStruct
 
 ### 0.0.1 (2024-08-30)
 

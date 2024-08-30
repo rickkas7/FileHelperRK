@@ -563,6 +563,55 @@ int FileHelperRK::readBytes(const char *fileName, uint8_t *&dataPtr, size_t &dat
     return result;
 }
 
+int FileHelperRK::readBytesNoAlloc(const char *fileName, uint8_t *dataPtr, size_t &dataLen) {
+    int result = SYSTEM_ERROR_UNKNOWN;
+
+    int fd = open(fileName, O_RDONLY);
+    if (fd != -1) {
+        struct stat sb = {0};
+        result = fstat(fd, &sb); 
+        if (result == 0) {
+            if (dataLen > sb.st_size) {
+                dataLen = sb.st_size;
+            }
+
+            if (dataLen > 0) {
+                int readLen = read(fd, dataPtr, dataLen);
+                if (readLen == dataLen) {
+                    result = SYSTEM_ERROR_NONE;
+                }
+                else {
+                    if (readLen >= 0) {
+                        dataLen = (size_t) readLen;
+                    }
+                    else {
+                        dataLen = 0;
+                    }
+                    _fileHelperLog.error("readBytesNoAlloc bad length expected=%d got=%d", (int)dataLen, (int)readLen);
+                    result = errnoToSystemError();
+                }        
+            }
+            else {
+                // Empty file, not an error                
+                dataLen = 0;
+                result = SYSTEM_ERROR_NONE;
+            }
+
+            close(fd);
+        }
+        else {
+            dataLen = 0;
+            result = errnoToSystemError();
+        }
+    }
+    else {
+        _fileHelperLog.info("readBytesNoAlloc did not open fileName=%s errno=%d", fileName, errno);
+        result = errnoToSystemError();
+    }
+    
+    return result;    
+}
+
 
 
 int FileHelperRK::readString(const char *fileName, String &resultStr)

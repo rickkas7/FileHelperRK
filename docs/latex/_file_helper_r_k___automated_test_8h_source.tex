@@ -2,287 +2,342 @@
 \hypertarget{_file_helper_r_k___automated_test_8h_source}{}\label{_file_helper_r_k___automated_test_8h_source}\index{src/FileHelperRK\_AutomatedTest.h@{src/FileHelperRK\_AutomatedTest.h}}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ "{}FileHelperRK.h"{}}}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DOXYGEN\_DO\_NOT\_DOCUMENT}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ String\ baseDir;}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}FileHelperRK.h"{}}}
 \DoxyCodeLine{00004\ }
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ assert\_int(exp,\ val)\ \(\backslash\)}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\ \ \ \ if\ (exp\ !=\ val)\ \{\ Log.error("{}exp=\%d\ val=\%d\(\backslash\)n"{},\ (int)(exp),\ (int)(val));\ assert(false);\ \}}}
-\DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ assert\_cstr(exp,\ val)\ \(\backslash\)}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\ \ \ \ if\ (strcmp(exp,\ val)\ !=\ 0)\ \{\ Log.error("{}exp=\%s\ val=\%s\(\backslash\)n"{},\ exp,\ val);\ assert(false);\ \}}}
-\DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ assertDouble(exp,\ val,\ tol)\ \(\backslash\)}}
-\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ \ \ if\ (val\ <\ (exp\ -\/\ tol)\ ||\ val\ >\ (exp\ +\ tol))\ \{\ Log.error("{}exp=\%lf\ val=\%lf\(\backslash\)n"{},\ (double)exp,\ (double)val);\ assert(false);\ \}}}
-\DoxyCodeLine{00013\ }
-\DoxyCodeLine{00014\ \textcolor{keywordtype}{void}\ runTestParsePath()\ \{}
-\DoxyCodeLine{00015\ \ \ \ \ \{}
-\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}/usr"{}};}
-\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
-\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
-\DoxyCodeLine{00019\ }
-\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ assert\_int(1,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_af831e7eb66dc6cdb6a8e1fad697b8b31}{getPart}}(0).c\_str());}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7f1527bca149f34ef4bdd0dc06cf7458}{getFileBaseName}}().c\_str());}
-\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a8f3244ffcc5c67886768fc11826c01bd}{getFileExtension}}().c\_str());}
-\DoxyCodeLine{00028\ \ \ \ \ \}}
-\DoxyCodeLine{00029\ \ \ \ \ \{}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}/usr/foo"{}};}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
-\DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ assert\_int(2,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed[0].c\_str());}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[1].c\_str());}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
-\DoxyCodeLine{00041\ \ \ \ \ \}}
-\DoxyCodeLine{00042\ \ \ \ \ \{}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}/usr/foo/"{}};}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
-\DoxyCodeLine{00046\ }
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ assert\_int(2,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
-\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed[0].c\_str());}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[1].c\_str());}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
-\DoxyCodeLine{00055\ \ \ \ \ \}}
-\DoxyCodeLine{00056\ \ \ \ \ \{}
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}/usr/foo.txt"{}};}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
-\DoxyCodeLine{00060\ }
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
-\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ assert\_int(2,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed[0].c\_str());}
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo.txt"{}},\ parsed[1].c\_str());}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo.txt"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7f1527bca149f34ef4bdd0dc06cf7458}{getFileBaseName}}().c\_str());}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}txt"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a8f3244ffcc5c67886768fc11826c01bd}{getFileExtension}}().c\_str());}
-\DoxyCodeLine{00070\ \ \ \ \ \}}
-\DoxyCodeLine{00071\ \ \ \ \ \{}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}usr/foo"{}};}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
-\DoxyCodeLine{00075\ }
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ assert\_int(2,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed[0].c\_str());}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[1].c\_str());}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr/foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
-\DoxyCodeLine{00084\ \ \ \ \ \}\ \ \ \ }
-\DoxyCodeLine{00085\ \ \ \ \ \{}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}foo"{}};}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
-\DoxyCodeLine{00089\ }
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ assert\_int(1,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[0].c\_str());}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
-\DoxyCodeLine{00097\ \ \ \ \ \}\ \ \ \ }
-\DoxyCodeLine{00098\ \ \ \ \ \{}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}./foo"{}};}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
-\DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ assert\_int(parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}(),\ \textcolor{keyword}{false});}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ assert\_int(parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}(),\ \textcolor{keyword}{false});}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ assert\_int(parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}(),\ 2);}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}."{}},\ parsed[0].c\_str());}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[1].c\_str());}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}./foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
-\DoxyCodeLine{00110\ \ \ \ \ \}\ \ \ \ }
-\DoxyCodeLine{00111\ }
-\DoxyCodeLine{00112\ \ \ \ \ \{}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ String\ s;}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}/usr"{}},\ \textcolor{stringliteral}{"{}foo"{}});}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo"{}},\ s.c\_str());}
-\DoxyCodeLine{00116\ }
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}/usr/"{}},\ \textcolor{stringliteral}{"{}foo"{}});}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo"{}},\ s.c\_str());}
-\DoxyCodeLine{00119\ }
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}/usr"{}},\ \textcolor{stringliteral}{"{}"{}});}
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ s.c\_str());}
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}/usr"{}},\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ s.c\_str());}
-\DoxyCodeLine{00125\ }
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{keyword}{nullptr},\ \textcolor{stringliteral}{"{}foo"{}});}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ s.c\_str());}
-\DoxyCodeLine{00128\ }
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}foo"{}});}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ s.c\_str());}
-\DoxyCodeLine{00131\ }
-\DoxyCodeLine{00132\ \ \ \ \ \}}
-\DoxyCodeLine{00133\ \}}
-\DoxyCodeLine{00134\ }
-\DoxyCodeLine{00135\ \textcolor{keywordtype}{void}\ runTestDirs()\ \{}
-\DoxyCodeLine{00136\ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a32fcbe9e6c357d7ac81eec5394ce12a8}{FileHelperRK::mkdirs}}(\mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo"{}}));}
-\DoxyCodeLine{00137\ }
-\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a32fcbe9e6c357d7ac81eec5394ce12a8}{FileHelperRK::mkdirs}}(\mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo/a/b"{}}));}
+\DoxyCodeLine{00005\ String\ baseDir;}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ assert\_int(exp,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\ \ \ \ if\ (exp\ !=\ val)\ \{\ Log.error("{}exp=\%d\ val=\%d\(\backslash\)n"{},\ (int)(exp),\ (int)(val));\ assert(false);\ \}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ assert\_cstr(exp,\ val)\ \(\backslash\)}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\ \ \ \ if\ (strcmp(exp,\ val)\ !=\ 0)\ \{\ Log.error("{}exp=\%s\ val=\%s\(\backslash\)n"{},\ exp,\ val);\ assert(false);\ \}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ assertDouble(exp,\ val,\ tol)\ \(\backslash\)}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\ \ \ \ if\ (val\ <\ (exp\ -\/\ tol)\ ||\ val\ >\ (exp\ +\ tol))\ \{\ Log.error("{}exp=\%lf\ val=\%lf\(\backslash\)n"{},\ (double)exp,\ (double)val);\ assert(false);\ \}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{void}\ runTestParsePath()\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}/usr"{}};}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ assert\_int(1,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_af831e7eb66dc6cdb6a8e1fad697b8b31}{getPart}}(0).c\_str());}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7f1527bca149f34ef4bdd0dc06cf7458}{getFileBaseName}}().c\_str());}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a8f3244ffcc5c67886768fc11826c01bd}{getFileExtension}}().c\_str());}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}/usr/foo"{}};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ assert\_int(2,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed[0].c\_str());}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[1].c\_str());}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}/usr/foo/"{}};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ assert\_int(2,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed[0].c\_str());}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[1].c\_str());}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}/usr/foo.txt"{}};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{true},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ assert\_int(2,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed[0].c\_str());}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo.txt"{}},\ parsed[1].c\_str());}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo.txt"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7f1527bca149f34ef4bdd0dc06cf7458}{getFileBaseName}}().c\_str());}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}txt"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a8f3244ffcc5c67886768fc11826c01bd}{getFileExtension}}().c\_str());}
+\DoxyCodeLine{00072\ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}usr/foo"{}};}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ assert\_int(2,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed[0].c\_str());}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[1].c\_str());}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr/foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}usr"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
+\DoxyCodeLine{00086\ \ \ \ \ \}\ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}foo"{}};}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}());}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ assert\_int(\textcolor{keyword}{false},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}());}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ assert\_int(1,\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}());}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[0].c\_str());}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}(1).c\_str());}
+\DoxyCodeLine{00099\ \ \ \ \ \}\ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *path\ =\ \textcolor{stringliteral}{"{}./foo"{}};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path}{FileHelperRK::ParsedPath}}\ parsed;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_abdd3aa2f2b0ec82a8bbf45333a3fc91f}{parse}}(path);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ assert\_int(parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_aaf3c8d4502641cfd81953563e257f055}{getStartsWithSlash}}(),\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ assert\_int(parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a60e9bf18222f1a023808a362ea7f2195}{getEndsWithSlash}}(),\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ assert\_int(parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a7bcf79757d94fe767317d66d44879391}{getNumParts}}(),\ 2);}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}."{}},\ parsed[0].c\_str());}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ parsed[1].c\_str());}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}./foo"{}},\ parsed.\mbox{\hyperlink{class_file_helper_r_k_1_1_parsed_path_a2d1666f56b61ec03275e8d00eb2814bf}{generatePathString}}().c\_str());}
+\DoxyCodeLine{00112\ \ \ \ \ \}\ \ \ \ }
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ String\ s;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}/usr"{}},\ \textcolor{stringliteral}{"{}foo"{}});}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo"{}},\ s.c\_str());}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}/usr/"{}},\ \textcolor{stringliteral}{"{}foo"{}});}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr/foo"{}},\ s.c\_str());}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}/usr"{}},\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ s.c\_str());}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}/usr"{}},\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}/usr"{}},\ s.c\_str());}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{keyword}{nullptr},\ \textcolor{stringliteral}{"{}foo"{}});}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ s.c\_str());}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ s\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(\textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}foo"{}});}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}foo"{}},\ s.c\_str());}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \}}
+\DoxyCodeLine{00135\ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{keywordtype}{void}\ runTestDirs()\ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a32fcbe9e6c357d7ac81eec5394ce12a8}{FileHelperRK::mkdirs}}(\mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo"{}}));}
 \DoxyCodeLine{00139\ }
-\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a32fcbe9e6c357d7ac81eec5394ce12a8}{FileHelperRK::mkdirs}}(\mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo/a/c"{}}));}
+\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a32fcbe9e6c357d7ac81eec5394ce12a8}{FileHelperRK::mkdirs}}(\mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo/a/b"{}}));}
 \DoxyCodeLine{00141\ }
-\DoxyCodeLine{00142\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a32fcbe9e6c357d7ac81eec5394ce12a8}{FileHelperRK::mkdirs}}(\mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo/a/c"{}}));}
 \DoxyCodeLine{00143\ }
-\DoxyCodeLine{00144\ \textcolor{keywordtype}{void}\ runTestReadStoreString()\ \{}
-\DoxyCodeLine{00145\ \ \ \ \ String\ pathTest1\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo/test1"{}});}
-\DoxyCodeLine{00146\ }
-\DoxyCodeLine{00147\ \ \ \ \ \{}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ String\ s1\ =\ \textcolor{stringliteral}{"{}this\ is\ a\ test"{}};}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ s1);}
-\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00151\ }
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ String\ s2;}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ assert\_cstr(s1.c\_str(),\ s2.c\_str());}
-\DoxyCodeLine{00156\ }
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_usage}{FileHelperRK::Usage}}\ usage;}
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ result\ =\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_a64fc4863885a9fefae8b3b2105230e1c}{measure}}(pathTest1);}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ assert\_int(1,\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_abc379c382a4b1f62fa6f494f052bfefb}{numFiles}});}
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ assert\_int(0,\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_a4ecdecfdf92fc126ec71bb7062253a50}{numDirectories}});}
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ assert\_int(14,\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_ace0866281e6b00f9b9f6be87958d63cf}{fileBytes}});}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ assert\_int(2,\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_a994ac628c39268f4f55d0df885694043}{sectors}});}
-\DoxyCodeLine{00164\ }
-\DoxyCodeLine{00165\ \ \ \ \ \}}
+\DoxyCodeLine{00144\ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \textcolor{keywordtype}{void}\ runTestReadStoreString()\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ String\ pathTest1\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo/test1"{}});}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ String\ s1\ =\ \textcolor{stringliteral}{"{}this\ is\ a\ test"{}};}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ s1);}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ String\ s2;}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ assert\_cstr(s1.c\_str(),\ s2.c\_str());}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_1_1_usage}{FileHelperRK::Usage}}\ usage;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ result\ =\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_a64fc4863885a9fefae8b3b2105230e1c}{measure}}(pathTest1);}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ assert\_int(1,\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_abc379c382a4b1f62fa6f494f052bfefb}{numFiles}});}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ assert\_int(0,\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_a4ecdecfdf92fc126ec71bb7062253a50}{numDirectories}});}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ assert\_int(14,\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_ace0866281e6b00f9b9f6be87958d63cf}{fileBytes}});}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ assert\_int(2,\ usage.\mbox{\hyperlink{class_file_helper_r_k_1_1_usage_a994ac628c39268f4f55d0df885694043}{sectors}});}
 \DoxyCodeLine{00166\ }
-\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//\ Make\ sure\ string\ truncates}}
-\DoxyCodeLine{00168\ \ \ \ \ \{}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ String\ s1\ =\ \textcolor{stringliteral}{"{}xxx"{}};}
-\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ s1);}
-\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00172\ }
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ String\ s2;}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
-\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ assert\_cstr(s1.c\_str(),\ s2.c\_str());}
-\DoxyCodeLine{00177\ \ \ \ \ \}}
-\DoxyCodeLine{00178\ }
-\DoxyCodeLine{00179\ \ \ \ \ \textcolor{comment}{//\ Make\ sure\ string\ grows}}
-\DoxyCodeLine{00180\ \ \ \ \ \{}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ String\ s1\ =\ \textcolor{stringliteral}{"{}this\ is\ a\ test\ 2"{}};}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ s1);}
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00184\ }
-\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ String\ s2;}
-\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ assert\_cstr(s1.c\_str(),\ s2.c\_str());}
-\DoxyCodeLine{00189\ \ \ \ \ \}}
-\DoxyCodeLine{00190\ }
-\DoxyCodeLine{00191\ \ \ \ \ \textcolor{comment}{//\ c-\/string}}
-\DoxyCodeLine{00192\ \ \ \ \ \{}
-\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s1\ =\ \textcolor{stringliteral}{"{}this\ is\ a\ test\ 3"{}};}
-\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ s1);}
-\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00196\ }
-\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ String\ s2;}
-\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
-\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ assert\_cstr(s1,\ s2.c\_str());}
-\DoxyCodeLine{00201\ \ \ \ \ \}}
-\DoxyCodeLine{00202\ }
-\DoxyCodeLine{00203\ \ \ \ \ \textcolor{comment}{//\ null\ c-\/string}}
-\DoxyCodeLine{00204\ \ \ \ \ \{}
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ NULL);}
-\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00207\ }
-\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ String\ s2;}
-\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
-\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}"{}},\ s2.c\_str());}
-\DoxyCodeLine{00212\ \ \ \ \ \}}
-\DoxyCodeLine{00213\ }
-\DoxyCodeLine{00214\ \}}
+\DoxyCodeLine{00167\ \ \ \ \ \}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{comment}{//\ Make\ sure\ string\ truncates}}
+\DoxyCodeLine{00170\ \ \ \ \ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ String\ s1\ =\ \textcolor{stringliteral}{"{}xxx"{}};}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ s1);}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ String\ s2;}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ assert\_cstr(s1.c\_str(),\ s2.c\_str());}
+\DoxyCodeLine{00179\ \ \ \ \ \}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{comment}{//\ Make\ sure\ string\ grows}}
+\DoxyCodeLine{00182\ \ \ \ \ \{}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ String\ s1\ =\ \textcolor{stringliteral}{"{}this\ is\ a\ test\ 2"{}};}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ s1);}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ String\ s2;}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ assert\_cstr(s1.c\_str(),\ s2.c\_str());}
+\DoxyCodeLine{00191\ \ \ \ \ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//\ c-\/string}}
+\DoxyCodeLine{00194\ \ \ \ \ \{}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s1\ =\ \textcolor{stringliteral}{"{}this\ is\ a\ test\ 3"{}};}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ s1);}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ String\ s2;}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ assert\_cstr(s1,\ s2.c\_str());}
+\DoxyCodeLine{00203\ \ \ \ \ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{comment}{//\ null\ c-\/string}}
+\DoxyCodeLine{00206\ \ \ \ \ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900236}{FileHelperRK::storeString}}(pathTest1,\ NULL);}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ String\ s2;}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{FileHelperRK::readString}}(pathTest1,\ s2);}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ assert\_cstr(\textcolor{stringliteral}{"{}"{}},\ s2.c\_str());}
+\DoxyCodeLine{00214\ \ \ \ \ \}}
 \DoxyCodeLine{00215\ }
-\DoxyCodeLine{00216\ \textcolor{keywordtype}{void}\ runTestVariant()\ \{}
-\DoxyCodeLine{00217\ \textcolor{preprocessor}{\#if\ defined(SYSTEM\_VERSION\_560)\ ||\ defined(UNITTEST)}}
-\DoxyCodeLine{00218\ \ \ \ \ String\ pathTest2\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo/test2"{}});}
-\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{int}\ result;}
-\DoxyCodeLine{00220\ }
-\DoxyCodeLine{00221\ \ \ \ \ \{}
-\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ particle::Variant\ v1(\textcolor{stringliteral}{"{}this\ is\ a\ test"{}});}
-\DoxyCodeLine{00223\ }
-\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ result\ =\ FileHelperRK::storeVariant(pathTest2,\ v1);\ \ \ \ \ \ \ }
-\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00226\ }
-\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ particle::Variant\ v2;}
+\DoxyCodeLine{00216\ \}}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \textcolor{keywordtype}{void}\ runTestVariant()\ \{}
+\DoxyCodeLine{00219\ \textcolor{preprocessor}{\#if\ defined(SYSTEM\_VERSION\_560)\ ||\ defined(UNITTEST)}}
+\DoxyCodeLine{00220\ \ \ \ \ String\ pathTest2\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo/test2"{}});}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordtype}{int}\ result;}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ particle::Variant\ v1(\textcolor{stringliteral}{"{}this\ is\ a\ test"{}});}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ result\ =\ FileHelperRK::storeVariant(pathTest2,\ v1);\ \ \ \ \ \ \ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
 \DoxyCodeLine{00228\ }
-\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ result\ =\ \ FileHelperRK::readVariant(pathTest2,\ v2);}
-\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00231\ }
-\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ assert\_cstr(v1.toString().c\_str(),\ v2.toString().c\_str());}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ particle::Variant\ v2;}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ result\ =\ \ FileHelperRK::readVariant(pathTest2,\ v2);}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
 \DoxyCodeLine{00233\ }
-\DoxyCodeLine{00234\ \ \ \ \ \}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ assert\_cstr(v1.toString().c\_str(),\ v2.toString().c\_str());}
 \DoxyCodeLine{00235\ }
-\DoxyCodeLine{00236\ \ \ \ \ \{}
-\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *jsonStr\ =\ \textcolor{stringliteral}{"{}\{\(\backslash\)"{}a\(\backslash\)"{}:123,\(\backslash\)"{}b\(\backslash\)"{}:\(\backslash\)"{}test\(\backslash\)"{},\(\backslash\)"{}c\(\backslash\)"{}:true,\(\backslash\)"{}d\(\backslash\)"{}:[1,2,3]\}"{}};}
-\DoxyCodeLine{00238\ }
-\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ JSONValue\ jsonValue\ =\ JSONValue::parseCopy(jsonStr);}
+\DoxyCodeLine{00236\ \ \ \ \ \}}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \ \ \ \ \{}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *jsonStr\ =\ \textcolor{stringliteral}{"{}\{\(\backslash\)"{}a\(\backslash\)"{}:123,\(\backslash\)"{}b\(\backslash\)"{}:\(\backslash\)"{}test\(\backslash\)"{},\(\backslash\)"{}c\(\backslash\)"{}:true,\(\backslash\)"{}d\(\backslash\)"{}:[1,2,3]\}"{}};}
 \DoxyCodeLine{00240\ }
-\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
-\DoxyCodeLine{00242\ \textcolor{comment}{\ \ \ \ \ \ \ \ JSONObjectIterator\ iter(jsonValue);}}
-\DoxyCodeLine{00243\ \textcolor{comment}{\ \ \ \ \ \ \ \ while(iter.next())\ \{}}
-\DoxyCodeLine{00244\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Log.info("{}key=\%s\ value=\%s"{},\ }}
-\DoxyCodeLine{00245\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ (const\ char\ *)\ iter.name(),\ }}
-\DoxyCodeLine{00246\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ (const\ char\ *)\ iter.value().toString());}}
-\DoxyCodeLine{00247\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
-\DoxyCodeLine{00248\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
-\DoxyCodeLine{00249\ }
-\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ particle::Variant\ v1\ =\ particle::Variant::fromJSON(jsonValue);;}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ JSONValue\ jsonValue\ =\ JSONValue::parseCopy(jsonStr);}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00244\ \textcolor{comment}{\ \ \ \ \ \ \ \ JSONObjectIterator\ iter(jsonValue);}}
+\DoxyCodeLine{00245\ \textcolor{comment}{\ \ \ \ \ \ \ \ while(iter.next())\ \{}}
+\DoxyCodeLine{00246\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Log.info("{}key=\%s\ value=\%s"{},\ }}
+\DoxyCodeLine{00247\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ (const\ char\ *)\ iter.name(),\ }}
+\DoxyCodeLine{00248\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ (const\ char\ *)\ iter.value().toString());}}
+\DoxyCodeLine{00249\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00250\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
 \DoxyCodeLine{00251\ }
-\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ result\ =\ FileHelperRK::storeVariant(pathTest2,\ v1);\ \ \ \ \ \ \ }
-\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00254\ }
-\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ particle::Variant\ v2;}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ particle::Variant\ v1\ =\ particle::Variant::fromJSON(jsonValue);;}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ result\ =\ FileHelperRK::storeVariant(pathTest2,\ v1);\ \ \ \ \ \ \ }
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
 \DoxyCodeLine{00256\ }
-\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ result\ =\ \ FileHelperRK::readVariant(pathTest2,\ v2);}
-\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
-\DoxyCodeLine{00259\ }
-\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ String\ s\ =\ v2.toJSON();}
-\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ assert\_cstr(jsonStr,\ s.c\_str());}
-\DoxyCodeLine{00262\ \ \ \ \ \}}
-\DoxyCodeLine{00263\ \textcolor{preprocessor}{\#else\ \ }}
-\DoxyCodeLine{00264\ \ \ \ \ Log.info(\textcolor{stringliteral}{"{}Variant\ tests\ skipped"{}});}
-\DoxyCodeLine{00265\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ defined(SYSTEM\_VERSION\_560)\ ||\ defined(UNITTEST)}}
-\DoxyCodeLine{00266\ \}}
-\DoxyCodeLine{00267\ }
-\DoxyCodeLine{00268\ }
-\DoxyCodeLine{00269\ \textcolor{keywordtype}{void}\ runTest()\ \{}
-\DoxyCodeLine{00270\ \ \ \ \ runTestParsePath();}
-\DoxyCodeLine{00271\ \ \ \ \ runTestDirs();}
-\DoxyCodeLine{00272\ \ \ \ \ runTestReadStoreString();}
-\DoxyCodeLine{00273\ \ \ \ \ runTestVariant();}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ particle::Variant\ v2;}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ result\ =\ \ FileHelperRK::readVariant(pathTest2,\ v2);}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ assert\_int(SYSTEM\_ERROR\_NONE,\ result);}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ String\ s\ =\ v2.toJSON();}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ assert\_cstr(jsonStr,\ s.c\_str());}
+\DoxyCodeLine{00264\ \ \ \ \ \}}
+\DoxyCodeLine{00265\ \textcolor{preprocessor}{\#else\ \ }}
+\DoxyCodeLine{00266\ \ \ \ \ Log.info(\textcolor{stringliteral}{"{}Variant\ tests\ skipped"{}});}
+\DoxyCodeLine{00267\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ defined(SYSTEM\_VERSION\_560)\ ||\ defined(UNITTEST)}}
+\DoxyCodeLine{00268\ \}}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \textcolor{keyword}{struct\ }TestStruct1\ \{}
+\DoxyCodeLine{00271\ \ \ \ \ uint32\_t\ f1;}
+\DoxyCodeLine{00272\ \ \ \ \ \textcolor{keywordtype}{char}\ f2[10];}
+\DoxyCodeLine{00273\ \};}
 \DoxyCodeLine{00274\ }
-\DoxyCodeLine{00275\ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a0c2d20476bdf3a0c447ea4b0f49d0154}{FileHelperRK::deleteRecursive}}(\mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo"{}}));}
-\DoxyCodeLine{00276\ }
-\DoxyCodeLine{00277\ \ \ \ \ Log.info(\textcolor{stringliteral}{"{}runTest\ completed!"{}});}
-\DoxyCodeLine{00278\ \}}
-\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00275\ \textcolor{keyword}{struct\ }TestStruct2\ \{}
+\DoxyCodeLine{00276\ \ \ \ \ uint32\_t\ f1;}
+\DoxyCodeLine{00277\ \ \ \ \ \textcolor{keywordtype}{char}\ f2[10];}
+\DoxyCodeLine{00278\ \ \ \ \ uint32\_t\ f3;}
+\DoxyCodeLine{00279\ \};}
 \DoxyCodeLine{00280\ }
-\DoxyCodeLine{00281\ }
-\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00281\ \textcolor{keywordtype}{void}\ runTestStruct()\ \{}
+\DoxyCodeLine{00282\ \ \ \ \ String\ pathTest2\ =\ \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo/test2"{}});}
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordtype}{int}\ result;}
+\DoxyCodeLine{00284\ \ \ \ \ }
+\DoxyCodeLine{00285\ \ \ \ \ \{}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ TestStruct1\ ts1a;}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ memset(\&ts1a,\ 0,\ \textcolor{keyword}{sizeof}(ts1a));}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ ts1a.f1\ =\ 0x12345678;}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ strcpy(ts1a.f2,\ \textcolor{stringliteral}{"{}testing!"{}});}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_ad557504fda23d33108789c2aded447f0}{FileHelperRK::storeStruct}}(pathTest2,\ ts1a);}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ TestStruct1\ ts1b;}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a4439374afbb4e76eb34f1b5ad9ec69ad}{FileHelperRK::readStruct}}(pathTest2,\ ts1b);}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ assert\_int(ts1a.f1,\ ts1b.f1);}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ assert\_cstr(ts1a.f2,\ ts1b.f2);}
+\DoxyCodeLine{00297\ }
+\DoxyCodeLine{00298\ \ \ \ \ \}}
+\DoxyCodeLine{00299\ \ \ \ \ \{}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ TestStruct2\ ts2a;}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ memset(\&ts2a,\ 0,\ \textcolor{keyword}{sizeof}(ts2a));}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ ts2a.f1\ =\ 0x12345678;}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ strcpy(ts2a.f2,\ \textcolor{stringliteral}{"{}testing!"{}});}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ ts2a.f3\ =\ 0x55aa55aa;}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ TestStruct2\ ts2b;}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ ts2b.f3\ =\ 0xffffffff;}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a4439374afbb4e76eb34f1b5ad9ec69ad}{FileHelperRK::readStruct}}(pathTest2,\ ts2b);}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ assert\_int(ts2a.f1,\ ts2b.f1);}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ assert\_cstr(ts2a.f2,\ ts2b.f2);}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ assert\_int(0,\ ts2b.f3);}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_ad557504fda23d33108789c2aded447f0}{FileHelperRK::storeStruct}}(pathTest2,\ ts2a);}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a4439374afbb4e76eb34f1b5ad9ec69ad}{FileHelperRK::readStruct}}(pathTest2,\ ts2b);}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ assert\_int(ts2a.f1,\ ts2b.f1);}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ assert\_cstr(ts2a.f2,\ ts2b.f2);}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ assert\_int(ts2a.f3,\ ts2b.f3);}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \}}
+\DoxyCodeLine{00321\ \}}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \textcolor{keywordtype}{void}\ runTest()\ \{}
+\DoxyCodeLine{00325\ \ \ \ \ runTestParsePath();}
+\DoxyCodeLine{00326\ \ \ \ \ runTestDirs();}
+\DoxyCodeLine{00327\ \ \ \ \ runTestReadStoreString();}
+\DoxyCodeLine{00328\ \ \ \ \ runTestVariant();}
+\DoxyCodeLine{00329\ \ \ \ \ runTestStruct();}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00331\ \ \ \ \ \mbox{\hyperlink{class_file_helper_r_k_a0c2d20476bdf3a0c447ea4b0f49d0154}{FileHelperRK::deleteRecursive}}(\mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{FileHelperRK::pathJoin}}(baseDir,\ \textcolor{stringliteral}{"{}foo"{}}));}
+\DoxyCodeLine{00332\ }
+\DoxyCodeLine{00333\ \ \ \ \ Log.info(\textcolor{stringliteral}{"{}runTest\ completed!"{}});}
+\DoxyCodeLine{00334\ \}}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DOXYGEN\_DO\_NOT\_DOCUMENT}}
 
 \end{DoxyCode}

@@ -122,12 +122,23 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a7ee036709c8eeaf9a31399fb7e9fe90a" id="r_a7ee036709c8eeaf9a31399fb7e9fe90a"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ee036709c8eeaf9a31399fb7e9fe90a">storeString</a> (const char *fileName, const char *str)</td></tr>
 <tr class="memdesc:a7ee036709c8eeaf9a31399fb7e9fe90a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a c-string to a file.  <br /></td></tr>
 <tr class="separator:a7ee036709c8eeaf9a31399fb7e9fe90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad557504fda23d33108789c2aded447f0" id="r_ad557504fda23d33108789c2aded447f0"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ad557504fda23d33108789c2aded447f0"><td class="memTemplItemLeft" align="right" valign="top">static const T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad557504fda23d33108789c2aded447f0">storeStruct</a> (const char *fileName, const T &amp;t)</td></tr>
+<tr class="memdesc:ad557504fda23d33108789c2aded447f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a struct in a file.  <br /></td></tr>
+<tr class="separator:ad557504fda23d33108789c2aded447f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2f4b219ab2a2ce25fe5f5d8ba125bf9" id="r_aa2f4b219ab2a2ce25fe5f5d8ba125bf9"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2f4b219ab2a2ce25fe5f5d8ba125bf9">readBytes</a> (const char *fileName, uint8_t *&amp;dataPtr, size_t &amp;dataLen, bool nullTerminate=false)</td></tr>
 <tr class="memdesc:aa2f4b219ab2a2ce25fe5f5d8ba125bf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read bytes from a file.  <br /></td></tr>
 <tr class="separator:aa2f4b219ab2a2ce25fe5f5d8ba125bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc9329cb529596760ed429ea0e82b0e3" id="r_adc9329cb529596760ed429ea0e82b0e3"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc9329cb529596760ed429ea0e82b0e3">readBytesNoAlloc</a> (const char *fileName, uint8_t *dataPtr, size_t &amp;dataLen)</td></tr>
+<tr class="memdesc:adc9329cb529596760ed429ea0e82b0e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read bytes from a file into a buffer instead of allocating one.  <br /></td></tr>
+<tr class="separator:adc9329cb529596760ed429ea0e82b0e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0435deb49a3ecb8282020cbbaaad35fd" id="r_a0435deb49a3ecb8282020cbbaaad35fd"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0435deb49a3ecb8282020cbbaaad35fd">readString</a> (const char *fileName, String &amp;result)</td></tr>
 <tr class="memdesc:a0435deb49a3ecb8282020cbbaaad35fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read file contents to a String object.  <br /></td></tr>
 <tr class="separator:a0435deb49a3ecb8282020cbbaaad35fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4439374afbb4e76eb34f1b5ad9ec69ad" id="r_a4439374afbb4e76eb34f1b5ad9ec69ad"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a4439374afbb4e76eb34f1b5ad9ec69ad"><td class="memTemplItemLeft" align="right" valign="top">static T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4439374afbb4e76eb34f1b5ad9ec69ad">readStruct</a> (const char *fileName, T &amp;t)</td></tr>
+<tr class="memdesc:a4439374afbb4e76eb34f1b5ad9ec69ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read file contents to a struct.  <br /></td></tr>
+<tr class="separator:a4439374afbb4e76eb34f1b5ad9ec69ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca5c9b72a8412e3e067495f65c1a4f48" id="r_aca5c9b72a8412e3e067495f65c1a4f48"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca5c9b72a8412e3e067495f65c1a4f48">errnoToSystemError</a> ()</td></tr>
 <tr class="memdesc:aca5c9b72a8412e3e067495f65c1a4f48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal function to convert the value of errno into a Particle system error code.  <br /></td></tr>
 <tr class="separator:aca5c9b72a8412e3e067495f65c1a4f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,6 +158,7 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>pathDe
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to perform common file operations. </p>
+<p>License: MIT (can use in free or commercial open or closed source products) Repository: <a href="https://github.com/rickkas7/FileHelperRK">https://github.com/rickkas7/FileHelperRK</a> </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0c2d20476bdf3a0c447ea4b0f49d0154" name="a0c2d20476bdf3a0c447ea4b0f49d0154"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0c2d20476bdf3a0c447ea4b0f49d0154">&#9670;&#160;</a></span>deleteRecursive()</h2>
@@ -342,6 +354,51 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>pathDe
 
 </div>
 </div>
+<a id="adc9329cb529596760ed429ea0e82b0e3" name="adc9329cb529596760ed429ea0e82b0e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc9329cb529596760ed429ea0e82b0e3">&#9670;&#160;</a></span>readBytesNoAlloc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FileHelperRK::readBytesNoAlloc </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>fileName</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>dataPtr</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>dataLen</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read bytes from a file into a buffer instead of allocating one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileName</td><td>Filename to read from </td></tr>
+    <tr><td class="paramname">dataPtr</td><td>Buffer filled in with up to dataLen bytes </td></tr>
+    <tr><td class="paramname">dataLen</td><td>On entry, size of the buffer in dataPtr. On exit, number of bytes copied to dataPtr </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero) </dd></dl>
+
+</div>
+</div>
 <a id="a0435deb49a3ecb8282020cbbaaad35fd" name="a0435deb49a3ecb8282020cbbaaad35fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0435deb49a3ecb8282020cbbaaad35fd">&#9670;&#160;</a></span>readString()</h2>
 
@@ -378,6 +435,54 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>pathDe
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero) </dd></dl>
+
+</div>
+</div>
+<a id="a4439374afbb4e76eb34f1b5ad9ec69ad" name="a4439374afbb4e76eb34f1b5ad9ec69ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4439374afbb4e76eb34f1b5ad9ec69ad">&#9670;&#160;</a></span>readStruct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static T &amp; FileHelperRK::readStruct </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>fileName</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T &amp;</td>          <td class="paramname"><span class="paramname"><em>t</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read file contents to a struct. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The struct/class to read </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileName</td><td>Filename to read from </td></tr>
+    <tr><td class="paramname">t</td><td>The variable to read into </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>T&amp; Returns t.</dd></dl>
+<p>If the struct is larger than the file, the extra space is padded with 0 bytes. If the struct is smaller than the file, the extra bytes rae ignored. If an error occurs, the struct is filled with 0 bytes. </p>
 
 </div>
 </div>
@@ -502,6 +607,54 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>pathDe
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero) </dd></dl>
+
+</div>
+</div>
+<a id="ad557504fda23d33108789c2aded447f0" name="ad557504fda23d33108789c2aded447f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad557504fda23d33108789c2aded447f0">&#9670;&#160;</a></span>storeStruct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const T &amp; FileHelperRK::storeStruct </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>fileName</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>t</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Store a struct in a file. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The struct/class to read </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileName</td><td>Filename to read from </td></tr>
+    <tr><td class="paramname">t</td><td>The variable to write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>const T&amp; returns t that was passed in</dd></dl>
+<p>The struct must be flat; embedded objects including String are not serialized and will not be saved and restored properly. </p>
 
 </div>
 </div>

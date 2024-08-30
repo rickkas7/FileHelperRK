@@ -385,6 +385,24 @@ public:
 #endif // SYSTEM_VERSION_560
 
     /**
+     * @brief Store a struct in a file
+     * 
+     * @tparam T The struct/class to read
+     * @param fileName Filename to read from
+     * @param t The variable to write
+     * @return const T& returns t that was passed in
+     * 
+     * The struct must be flat; embedded objects including String are not serialized
+     * and will not be saved and restored properly.
+     */
+    template <typename T> 
+    static const T &storeStruct(const char *fileName, const T &t) {
+        storeBytes(fileName, (const uint8_t *)&t, sizeof(T));
+        return t;
+    }
+    
+
+    /**
      * @brief Read bytes from a file
      * 
      * @param fileName Filename to read from
@@ -398,6 +416,16 @@ public:
     static int readBytes(const char *fileName, uint8_t *&dataPtr, size_t &dataLen, bool nullTerminate = false);
 
     /**
+     * @brief Read bytes from a file into a buffer instead of allocating one
+     * 
+     * @param fileName Filename to read from
+     * @param dataPtr Buffer filled in with up to dataLen bytes
+     * @param dataLen On entry, size of the buffer in dataPtr. On exit, number of bytes copied to dataPtr
+     * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
+     */
+    static int readBytesNoAlloc(const char *fileName, uint8_t *dataPtr, size_t &dataLen);
+
+    /**
      * @brief Read file contents to a String object
      * 
      * @param fileName Filename to read from
@@ -405,6 +433,31 @@ public:
      * @return int SYSTEM_ERROR_NONE (0) on success or a system error code (non-zero)
      */
     static int readString(const char *fileName, String &result);
+
+    /**
+     * @brief Read file contents to a struct
+     * 
+     * @tparam T The struct/class to read
+     * @param fileName Filename to read from
+     * @param t The variable to read into
+     * @return T& Returns t.
+     * 
+     * If the struct is larger than the file, the extra space is padded with 0 bytes.
+     * If the struct is smaller than the file, the extra bytes rae ignored.
+     * If an error occurs, the struct is filled with 0 bytes.
+     */
+    template <typename T> 
+    static T &readStruct(const char *fileName, T &t) {
+        size_t dataLen = sizeof(T);
+        if (readBytesNoAlloc(fileName, (uint8_t*) &t, dataLen) != SYSTEM_ERROR_NONE) {
+            dataLen = 0;
+        }
+        for(size_t ii = dataLen; ii < sizeof(T); ii++) {
+            ((uint8_t *)&t)[ii] = 0;
+        }
+        return t;
+    }
+
 
 #if defined(SYSTEM_VERSION_560) || defined(UNITTEST)
     /**

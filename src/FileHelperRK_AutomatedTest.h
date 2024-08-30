@@ -1,3 +1,5 @@
+#ifndef DOXYGEN_DO_NOT_DOCUMENT
+
 #include "FileHelperRK.h"
 
 String baseDir;
@@ -265,12 +267,66 @@ void runTestVariant() {
 #endif // defined(SYSTEM_VERSION_560) || defined(UNITTEST)
 }
 
+struct TestStruct1 {
+    uint32_t f1;
+    char f2[10];
+};
+
+struct TestStruct2 {
+    uint32_t f1;
+    char f2[10];
+    uint32_t f3;
+};
+
+void runTestStruct() {
+    String pathTest2 = FileHelperRK::pathJoin(baseDir, "foo/test2");
+    int result;
+    
+    {
+        TestStruct1 ts1a;
+        memset(&ts1a, 0, sizeof(ts1a));
+        ts1a.f1 = 0x12345678;
+        strcpy(ts1a.f2, "testing!");
+
+        FileHelperRK::storeStruct(pathTest2, ts1a);
+        
+        TestStruct1 ts1b;
+        FileHelperRK::readStruct(pathTest2, ts1b);
+        assert_int(ts1a.f1, ts1b.f1);
+        assert_cstr(ts1a.f2, ts1b.f2);
+
+    }
+    {
+        TestStruct2 ts2a;
+        memset(&ts2a, 0, sizeof(ts2a));
+        ts2a.f1 = 0x12345678;
+        strcpy(ts2a.f2, "testing!");
+        ts2a.f3 = 0x55aa55aa;
+
+        TestStruct2 ts2b;
+        ts2b.f3 = 0xffffffff;
+
+        FileHelperRK::readStruct(pathTest2, ts2b);
+        assert_int(ts2a.f1, ts2b.f1);
+        assert_cstr(ts2a.f2, ts2b.f2);
+        assert_int(0, ts2b.f3);
+
+        FileHelperRK::storeStruct(pathTest2, ts2a);
+        FileHelperRK::readStruct(pathTest2, ts2b);
+        assert_int(ts2a.f1, ts2b.f1);
+        assert_cstr(ts2a.f2, ts2b.f2);
+        assert_int(ts2a.f3, ts2b.f3);
+
+    }
+}
+
 
 void runTest() {
     runTestParsePath();
     runTestDirs();
     runTestReadStoreString();
     runTestVariant();
+    runTestStruct();
 
     FileHelperRK::deleteRecursive(FileHelperRK::pathJoin(baseDir, "foo"));
 
@@ -278,5 +334,4 @@ void runTest() {
 }
 
 
-
-
+#endif // DOXYGEN_DO_NOT_DOCUMENT

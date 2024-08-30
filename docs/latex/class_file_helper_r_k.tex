@@ -37,10 +37,16 @@ static int \mbox{\hyperlink{class_file_helper_r_k_a6a7809776996128e54bf94f9a0900
 \begin{DoxyCompactList}\small\item\em Store a String object to a file. \end{DoxyCompactList}\item 
 static int \mbox{\hyperlink{class_file_helper_r_k_a7ee036709c8eeaf9a31399fb7e9fe90a}{store\+String}} (const char \texorpdfstring{$\ast$}{*}file\+Name, const char \texorpdfstring{$\ast$}{*}str)
 \begin{DoxyCompactList}\small\item\em Store a c-\/string to a file. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\static const T \& \mbox{\hyperlink{class_file_helper_r_k_ad557504fda23d33108789c2aded447f0}{store\+Struct}} (const char \texorpdfstring{$\ast$}{*}file\+Name, const T \&t)
+\begin{DoxyCompactList}\small\item\em Store a struct in a file. \end{DoxyCompactList}\item 
 static int \mbox{\hyperlink{class_file_helper_r_k_aa2f4b219ab2a2ce25fe5f5d8ba125bf9}{read\+Bytes}} (const char \texorpdfstring{$\ast$}{*}file\+Name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}\&data\+Ptr, size\+\_\+t \&data\+Len, bool null\+Terminate=false)
 \begin{DoxyCompactList}\small\item\em Read bytes from a file. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{class_file_helper_r_k_adc9329cb529596760ed429ea0e82b0e3}{read\+Bytes\+No\+Alloc}} (const char \texorpdfstring{$\ast$}{*}file\+Name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}data\+Ptr, size\+\_\+t \&data\+Len)
+\begin{DoxyCompactList}\small\item\em Read bytes from a file into a buffer instead of allocating one. \end{DoxyCompactList}\item 
 static int \mbox{\hyperlink{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}{read\+String}} (const char \texorpdfstring{$\ast$}{*}file\+Name, String \&result)
 \begin{DoxyCompactList}\small\item\em Read file contents to a String object. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\static T \& \mbox{\hyperlink{class_file_helper_r_k_a4439374afbb4e76eb34f1b5ad9ec69ad}{read\+Struct}} (const char \texorpdfstring{$\ast$}{*}file\+Name, T \&t)
+\begin{DoxyCompactList}\small\item\em Read file contents to a struct. \end{DoxyCompactList}\item 
 static int \mbox{\hyperlink{class_file_helper_r_k_aca5c9b72a8412e3e067495f65c1a4f48}{errno\+To\+System\+Error}} ()
 \begin{DoxyCompactList}\small\item\em Internal function to convert the value of errno into a Particle system error code. \end{DoxyCompactList}\item 
 static String \mbox{\hyperlink{class_file_helper_r_k_a143ee5eb2132adeb52b2cb914052cf5f}{path\+Join}} (const char \texorpdfstring{$\ast$}{*}a, const char \texorpdfstring{$\ast$}{*}b)
@@ -57,6 +63,8 @@ static const char \texorpdfstring{$\ast$}{*} {\bfseries path\+Delim} = "{}/"{}
 
 \doxysubsection{Detailed Description}
 Class to perform common file operations. 
+
+License\+: MIT (can use in free or commercial open or closed source products) Repository\+: \href{https://github.com/rickkas7/FileHelperRK}{\texttt{ https\+://github.\+com/rickkas7/\+File\+Helper\+RK}} 
 
 \doxysubsection{Member Function Documentation}
 \Hypertarget{class_file_helper_r_k_a0c2d20476bdf3a0c447ea4b0f49d0154}\label{class_file_helper_r_k_a0c2d20476bdf3a0c447ea4b0f49d0154} 
@@ -154,7 +162,29 @@ Read bytes from a file.
 \begin{DoxyReturn}{Returns}
 int SYSTEM\+\_\+\+ERROR\+\_\+\+NONE (0) on success or a system error code (non-\/zero)
 \end{DoxyReturn}
-If the returned value in data\+Ptr is non-\/zero, you must delete it using delete\mbox{[}\mbox{]} data\+Ptr. \Hypertarget{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}\label{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd} 
+If the returned value in data\+Ptr is non-\/zero, you must delete it using delete\mbox{[}\mbox{]} data\+Ptr. \Hypertarget{class_file_helper_r_k_adc9329cb529596760ed429ea0e82b0e3}\label{class_file_helper_r_k_adc9329cb529596760ed429ea0e82b0e3} 
+\index{FileHelperRK@{FileHelperRK}!readBytesNoAlloc@{readBytesNoAlloc}}
+\index{readBytesNoAlloc@{readBytesNoAlloc}!FileHelperRK@{FileHelperRK}}
+\doxysubsubsection{\texorpdfstring{readBytesNoAlloc()}{readBytesNoAlloc()}}
+{\footnotesize\ttfamily int File\+Helper\+RK\+::read\+Bytes\+No\+Alloc (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{file\+Name,  }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data\+Ptr,  }\item[{size\+\_\+t \&}]{data\+Len }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Read bytes from a file into a buffer instead of allocating one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Filename to read from \\
+\hline
+{\em data\+Ptr} & Buffer filled in with up to data\+Len bytes \\
+\hline
+{\em data\+Len} & On entry, size of the buffer in data\+Ptr. On exit, number of bytes copied to data\+Ptr \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int SYSTEM\+\_\+\+ERROR\+\_\+\+NONE (0) on success or a system error code (non-\/zero) 
+\end{DoxyReturn}
+\Hypertarget{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd}\label{class_file_helper_r_k_a0435deb49a3ecb8282020cbbaaad35fd} 
 \index{FileHelperRK@{FileHelperRK}!readString@{readString}}
 \index{readString@{readString}!FileHelperRK@{FileHelperRK}}
 \doxysubsubsection{\texorpdfstring{readString()}{readString()}}
@@ -174,7 +204,33 @@ Read file contents to a String object.
 \begin{DoxyReturn}{Returns}
 int SYSTEM\+\_\+\+ERROR\+\_\+\+NONE (0) on success or a system error code (non-\/zero) 
 \end{DoxyReturn}
-\Hypertarget{class_file_helper_r_k_a09823cd8966cef263861b4ff8d20ff78}\label{class_file_helper_r_k_a09823cd8966cef263861b4ff8d20ff78} 
+\Hypertarget{class_file_helper_r_k_a4439374afbb4e76eb34f1b5ad9ec69ad}\label{class_file_helper_r_k_a4439374afbb4e76eb34f1b5ad9ec69ad} 
+\index{FileHelperRK@{FileHelperRK}!readStruct@{readStruct}}
+\index{readStruct@{readStruct}!FileHelperRK@{FileHelperRK}}
+\doxysubsubsection{\texorpdfstring{readStruct()}{readStruct()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static T \& File\+Helper\+RK\+::read\+Struct (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{file\+Name,  }\item[{T \&}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Read file contents to a struct. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The struct/class to read \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Filename to read from \\
+\hline
+{\em t} & The variable to read into \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+T\& Returns t.
+\end{DoxyReturn}
+If the struct is larger than the file, the extra space is padded with 0 bytes. If the struct is smaller than the file, the extra bytes rae ignored. If an error occurs, the struct is filled with 0 bytes. \Hypertarget{class_file_helper_r_k_a09823cd8966cef263861b4ff8d20ff78}\label{class_file_helper_r_k_a09823cd8966cef263861b4ff8d20ff78} 
 \index{FileHelperRK@{FileHelperRK}!storeBytes@{storeBytes}}
 \index{storeBytes@{storeBytes}!FileHelperRK@{FileHelperRK}}
 \doxysubsubsection{\texorpdfstring{storeBytes()}{storeBytes()}}
@@ -236,7 +292,33 @@ Store a String object to a file.
 \begin{DoxyReturn}{Returns}
 int SYSTEM\+\_\+\+ERROR\+\_\+\+NONE (0) on success or a system error code (non-\/zero) 
 \end{DoxyReturn}
-\Hypertarget{class_file_helper_r_k_a67a75fa2a6981d9cf416468619ab49b5}\label{class_file_helper_r_k_a67a75fa2a6981d9cf416468619ab49b5} 
+\Hypertarget{class_file_helper_r_k_ad557504fda23d33108789c2aded447f0}\label{class_file_helper_r_k_ad557504fda23d33108789c2aded447f0} 
+\index{FileHelperRK@{FileHelperRK}!storeStruct@{storeStruct}}
+\index{storeStruct@{storeStruct}!FileHelperRK@{FileHelperRK}}
+\doxysubsubsection{\texorpdfstring{storeStruct()}{storeStruct()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static const T \& File\+Helper\+RK\+::store\+Struct (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{file\+Name,  }\item[{const T \&}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Store a struct in a file. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The struct/class to read \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Filename to read from \\
+\hline
+{\em t} & The variable to write \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+const T\& returns t that was passed in
+\end{DoxyReturn}
+The struct must be flat; embedded objects including String are not serialized and will not be saved and restored properly. \Hypertarget{class_file_helper_r_k_a67a75fa2a6981d9cf416468619ab49b5}\label{class_file_helper_r_k_a67a75fa2a6981d9cf416468619ab49b5} 
 \index{FileHelperRK@{FileHelperRK}!walk@{walk}}
 \index{walk@{walk}!FileHelperRK@{FileHelperRK}}
 \doxysubsubsection{\texorpdfstring{walk()}{walk()}}
