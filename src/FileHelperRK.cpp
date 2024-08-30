@@ -1,5 +1,6 @@
 #include "FileHelperRK.h"
 
+#include <fcntl.h>
 #include <dirent.h>
 #include <sys/stat.h>
 
@@ -141,69 +142,21 @@ void FileHelperRK::Usage::clear() {
     numDirectories = 0;
 }
 
-FileHelperRK::PrintToFile::PrintToFile() : fd(-1), closeFile(false) {
+FileHelperRK::FileStream::FileStream() : fd(-1), closeFile(false) {
 }
 
-FileHelperRK::PrintToFile::PrintToFile(int fd) : fd(fd), closeFile(false) {
-
-}
-
-int FileHelperRK::PrintToFile::open(const char *path, int mode, int perm) {
-    int result = SYSTEM_ERROR_UNKNOWN;
-
-    fd = ::open(path, mode, perm);
-    if (fd != -1) {
-        closeFile = true;
-        result = SYSTEM_ERROR_NONE;
-    }
-    else {
-        _fileHelperLog.info("PrintToFile::open did not open fileName=%s errno=%d", path, errno);
-        result = errnoToSystemError();
-    }
-    return result;
-}
-
-FileHelperRK::PrintToFile::~PrintToFile() {
-    if (closeFile && fd != -1) {
-        ::close(fd);
-        fd = -1;
-    }
-}
-
-int FileHelperRK::PrintToFile::close() {
-    if (fd != -1) {
-        ::close(fd);
-        fd = -1;
-    }
-    return SYSTEM_ERROR_NONE;
-}
-
-size_t FileHelperRK::PrintToFile::write(uint8_t c) {
-    size_t countResult = 0;
-    if (fd != -1) {
-        countResult = ::write(fd, &c, 1);
-    }
-    return countResult;
-}
-
-size_t FileHelperRK::PrintToFile::write(const uint8_t *buffer, size_t size) {
-    size_t countResult = 0;
-    if (fd != -1) {
-        countResult = ::write(fd, buffer, size);
-    }
-
-    return countResult;
-}
-    
-
-FileHelperRK::StreamFromFile::StreamFromFile() : fd(-1), closeFile(false) {
-}
-
-FileHelperRK::StreamFromFile::StreamFromFile(int fd) : fd(fd), closeFile(false) {
+FileHelperRK::FileStream::FileStream(int fd) : fd(fd), closeFile(false) {
 
 }
 
-int FileHelperRK::StreamFromFile::open(const char *path, int mode, int perm) {
+int FileHelperRK::FileStream::openForReading(const char *path) {
+    return open(path, O_RDONLY, 0666);
+}
+int FileHelperRK::FileStream::openForWriting(const char *path) {
+    return open(path, O_RDWR | O_CREAT | O_TRUNC, 0666);
+}
+
+int FileHelperRK::FileStream::open(const char *path, int mode, int perm) {
     int result = SYSTEM_ERROR_UNKNOWN;
 
     fd = ::open(path, mode, perm);
@@ -217,20 +170,20 @@ int FileHelperRK::StreamFromFile::open(const char *path, int mode, int perm) {
         result = SYSTEM_ERROR_NONE;
     }
     else {
-        _fileHelperLog.info("StreamFromFile::open did not open fileName=%s errno=%d", path, errno);
+        _fileHelperLog.info("FileStream::open did not open fileName=%s errno=%d", path, errno);
         result = errnoToSystemError();
     }
     return result;
 }
 
-FileHelperRK::StreamFromFile::~StreamFromFile() {
+FileHelperRK::FileStream::~FileStream() {
     if (closeFile && fd != -1) {
         ::close(fd);
         fd = -1;
     }
 }
 
-int FileHelperRK::StreamFromFile::close() {
+int FileHelperRK::FileStream::close() {
     if (fd != -1) {
         ::close(fd);
         fd = -1;
@@ -238,11 +191,11 @@ int FileHelperRK::StreamFromFile::close() {
     return SYSTEM_ERROR_NONE;
 }
 
-int FileHelperRK::StreamFromFile::available() {
+int FileHelperRK::FileStream::available() {
     return fileSize - fileOffset;
 }
 
-int FileHelperRK::StreamFromFile::read() {
+int FileHelperRK::FileStream::read() {
     int result = -1;
     uint8_t c;
 
@@ -257,7 +210,7 @@ int FileHelperRK::StreamFromFile::read() {
     return result;
 }
 
-int FileHelperRK::StreamFromFile::peek() {
+int FileHelperRK::FileStream::peek() {
     int result = read();
     if (result >= 0) {
         fileOffset--;
@@ -266,15 +219,32 @@ int FileHelperRK::StreamFromFile::peek() {
     return result;
 }
 
-int FileHelperRK::StreamFromFile::flush() {
-    return SYSTEM_ERROR_NONE;
+void FileHelperRK::FileStream::flush() {
 }
 
-int FileHelperRK::StreamFromFile::rewind() {
+int FileHelperRK::FileStream::rewind() {
     lseek(fd, 0, SEEK_SET);
     return SYSTEM_ERROR_NONE;
 }
 
+
+size_t FileHelperRK::FileStream::write(uint8_t c) {
+    size_t countResult = 0;
+    if (fd != -1) {
+        countResult = ::write(fd, &c, 1);
+    }
+    return countResult;
+}
+
+size_t FileHelperRK::FileStream::write(const uint8_t *buffer, size_t size) {
+    size_t countResult = 0;
+    if (fd != -1) {
+        countResult = ::write(fd, buffer, size);
+    }
+
+    return countResult;
+}
+    
 
 int FileHelperRK::mkdirs(const char *path) {
     int result = SYSTEM_ERROR_UNKNOWN;
@@ -441,15 +411,15 @@ int FileHelperRK::storeString(const char *fileName, const char *str)
 int FileHelperRK::storeVariant(const char *fileName, const particle::Variant &variant) {
     int result = SYSTEM_ERROR_UNKNOWN;
 
-    FileHelperRK::PrintToFile pf;
+    FileHelperRK::FileStream stream;
 
-    result = pf.open(fileName);
+    result = stream.openForWriting(fileName);
     if (result != SYSTEM_ERROR_NONE) {
         return result;
     }
-    result = particle::encodeToCBOR(variant, pf);
+    result = particle::encodeToCBOR(variant, stream);
 
-    pf.close();
+    stream.close();
     return result;
 }
 
@@ -581,15 +551,15 @@ int FileHelperRK::errnoToSystemError() {
 int FileHelperRK::readVariant(const char *fileName, particle::Variant &variant) {
     int result = SYSTEM_ERROR_UNKNOWN;
 
-    FileHelperRK::StreamFromFile sf;
+    FileHelperRK::FileStream stream;
 
-    result = sf.open(fileName);
+    result = stream.openForReading(fileName);
     if (result != SYSTEM_ERROR_NONE) {
         return result;
     }
-    result = particle::decodeFromCBOR(variant, sf);
+    result = particle::decodeFromCBOR(variant, stream);
 
-    sf.close();
+    stream.close();
     return result;
 }
 

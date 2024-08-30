@@ -3,7 +3,6 @@
 
 #include "Particle.h"
 
-#include <fcntl.h>
 #include <vector>
 
 /**
@@ -146,38 +145,28 @@ public:
         std::vector<String> parts; //!< parsed parts of the pathname. Does not contain empty parts.
     };
 
-    class PrintToFile : public Print {
+    class FileStream : public Stream, public Print {
     public:
-        PrintToFile();
-        PrintToFile(int fd);
+        FileStream();
+        FileStream(int fd);
 
-        virtual ~PrintToFile();
+        virtual ~FileStream();
 
-        int open(const char *path, int mode = O_RDWR | O_CREAT | O_TRUNC, int perm = 0666);
+        int openForReading(const char *path);
+        int openForWriting(const char *path);
+        int open(const char *path, int mode, int perm = 0666);
         int close();
 
-        virtual size_t write(uint8_t);
-        virtual size_t write(const uint8_t *buffer, size_t size);
-
-    protected:
-        int fd = -1;
-        bool closeFile = false;
-    };
-
-    class StreamFromFile : public Stream {
-    public:
-        StreamFromFile();
-        StreamFromFile(int fd);
-
-        virtual ~StreamFromFile();
-
-        int open(const char *path, int mode = O_RDONLY, int perm = 0666);
-        int close();
-
+        // Overrides for stream
         virtual int available();
         virtual int read();
         virtual int peek();
-        virtual int flush();
+        virtual void flush();
+
+        // Implementation from Print
+        virtual size_t write(uint8_t);
+        virtual size_t write(const uint8_t *buffer, size_t size);
+
 
         int rewind();
 
