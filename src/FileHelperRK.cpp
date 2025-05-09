@@ -90,7 +90,7 @@ int FileHelperRK::Usage::measure(const char *path, bool clearStats) {
         }
         else {
             fileBytes += walkParameters.size;
-            sectors += ((walkParameters.size + 511) / 512) + 1;
+            sectors += ((walkParameters.size + sectorSize - 1) / sectorSize) + 1;
             numFiles++;        
         }
     });

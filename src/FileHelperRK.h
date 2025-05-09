@@ -15,6 +15,9 @@
  */
 class FileHelperRK {
 public:
+    // The sectorSize on most chips is 4096 bytes.
+    static const size_t sectorSize = 4096;
+
     /**
      * @brief Measure file system usage
      */
@@ -51,8 +54,8 @@ public:
         /**
          * @brief Number of sectors used
          * 
-         * Each sector is 512 bytes. Each file takes one sector for metadata plus enough
-         * sectors to hold all of the data. Each directory takes one sector.
+         * Each sector is sectorSize bytes. Each file takes one sector for metadata plus enough
+         * sectors to hold all of the data. Each directory takes one sector. sectorSize is 4096.
          * 
          * This is an approximate value and may vary from the actual usage.
          */

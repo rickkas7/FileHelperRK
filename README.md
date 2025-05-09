@@ -24,6 +24,10 @@ Github Repository: https://github.com/rickkas7/FileHelperRK
  
 ## Version history
 
+### 0.0.3 (2025-05-09)
+
+- Correct sector size calculation (is 4096 bytes not 512)
+
 ### 0.0.2 (2024-08-30)
 
 - Added storeStruct and readStruct
